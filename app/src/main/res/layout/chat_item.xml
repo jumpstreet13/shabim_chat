@@ -12,10 +12,11 @@
         android:layout_width="108dp"
         android:layout_height="87dp"
         android:layout_marginStart="8dp"
+        fresco:placeholderImage="@color/colorPrimary"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        fresco:roundAsCirlce="true" />
+        fresco:roundAsCircle="true" />
 
     <TextView
         android:id="@+id/recipient_name"
@@ -49,10 +50,11 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sender_avatar"
         android:layout_width="44dp"
+        fresco:placeholderImage="@color/colorAccent"
         android:layout_height="27dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recipient_avatar"
-        fresco:roundAsCirlce="true" />
+        fresco:roundAsCircle="true" />
 </android.support.constraint.ConstraintLayout>

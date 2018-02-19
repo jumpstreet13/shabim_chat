@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.example.abakarmagomedov.shabimchat.Entity.ChatEntity;
 import com.facebook.common.util.UriUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import java.util.List;
 
@@ -61,17 +63,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             recipientName.setText(chatEntity.getRecepientName());
             messageText.setText(chatEntity.getMessageText());
             messageTime.setText("21.16");
-            Uri recipientUri = new Uri.Builder()
-                    .scheme(UriUtil.LOCAL_RESOURCE_SCHEME) // "res"
-                    .path(String.valueOf(R.drawable.ic_launcher_background))
-                    .build();
-            recipientAvatar.setImageURI(recipientUri);
 
-            Uri sendertUri = new Uri.Builder()
-                    .scheme(UriUtil.LOCAL_RESOURCE_SCHEME) // "res"
-                    .path(String.valueOf(R.drawable.ic_launcher_foreground))
-                    .build();
-            recipientAvatar.setImageURI(sendertUri);
+            //ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithResourceId(R.drawable.image).build();
+            //senderAvatar.setImageURI(imageRequest.getSourceUri());
+//
+            //ImageRequest imageRequestRecipient = ImageRequestBuilder.newBuilderWithResourceId(R.drawable.image).build();
+            //recipientAvatar.setImageURI(imageRequestRecipient.getSourceUri());
 
         }
     }
