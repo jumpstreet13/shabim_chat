@@ -64,11 +64,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             messageText.setText(chatEntity.getMessageText());
             messageTime.setText("21.16");
 
-            //ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithResourceId(R.drawable.image).build();
-            //senderAvatar.setImageURI(imageRequest.getSourceUri());
-//
-            //ImageRequest imageRequestRecipient = ImageRequestBuilder.newBuilderWithResourceId(R.drawable.image).build();
-            //recipientAvatar.setImageURI(imageRequestRecipient.getSourceUri());
+            ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse("https://blog.caranddriver.com/wp-content/uploads/2017/04/cars_3_characters-1-876x535.jpg")).build();
+            senderAvatar.setImageURI(imageRequest.getSourceUri());
+
+            ImageRequest imageRequestRecipient = ImageRequestBuilder.newBuilderWithSource(Uri.parse("https://blog.caranddriver.com/wp-content/uploads/2017/04/cars_3_characters-2-876x535.jpg")).build();
+            recipientAvatar.setImageURI(imageRequestRecipient.getSourceUri());
 
         }
     }
