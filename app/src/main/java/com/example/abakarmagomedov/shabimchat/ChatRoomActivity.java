@@ -15,4 +15,5 @@ public class ChatRoomActivity extends AppCompatActivity {
         chatId = getIntent().getIntExtra(CHAT_ROOM_ID, -5);
     }
 
+
 }
