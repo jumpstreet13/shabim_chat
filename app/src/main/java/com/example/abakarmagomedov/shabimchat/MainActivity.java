@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 .setImageRequest(request)
                 .build();
         logoView.setController(controller);
-
     }
 
 

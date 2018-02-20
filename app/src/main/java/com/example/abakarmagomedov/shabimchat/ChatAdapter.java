@@ -1,6 +1,7 @@
 package com.example.abakarmagomedov.shabimchat;
 
 import android.net.Uri;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,17 @@ import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
+    public interface ChatClickListener {
+        void chatClicked(int chatId);
+    }
+
+    private ChatClickListener chatClickListener;
     private List<ChatEntity> chats;
 
-    public ChatAdapter(List<ChatEntity> chats) {
+
+    public ChatAdapter(List<ChatEntity> chats, ChatClickListener chatClickListener) {
         this.chats = chats;
+        this.chatClickListener = chatClickListener;
     }
 
     @Override
@@ -37,7 +45,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
     @Override
     public void onBindViewHolder(ChatHolder holder, int position) {
         ChatEntity chatEntity = chats.get(position);
-        holder.bindView(chatEntity);
+        holder.bindView(chatEntity, chatClickListener);
     }
 
     @Override
@@ -49,6 +57,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
         private TextView recipientName, messageText, messageTime;
         private SimpleDraweeView recipientAvatar, senderAvatar;
+        private ConstraintLayout chatBox;
 
         public ChatHolder(View itemView) {
             super(itemView);
@@ -57,9 +66,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             messageText = itemView.findViewById(R.id.message_text);
             messageTime = itemView.findViewById(R.id.message_time);
             senderAvatar = itemView.findViewById(R.id.sender_avatar);
+            chatBox = itemView.findViewById(R.id.chat_box);
         }
 
-        void bindView(ChatEntity chatEntity) {
+        void bindView(ChatEntity chatEntity, final ChatClickListener listener) {
             recipientName.setText(chatEntity.getRecepientName());
             messageText.setText(chatEntity.getMessageText());
             messageTime.setText("21.16");
@@ -69,6 +79,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
             ImageRequest imageRequestRecipient = ImageRequestBuilder.newBuilderWithSource(Uri.parse("https://blog.caranddriver.com/wp-content/uploads/2017/04/cars_3_characters-2-876x535.jpg")).build();
             recipientAvatar.setImageURI(imageRequestRecipient.getSourceUri());
+
+            chatBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.chatClicked(0);
+                }
+            });
 
         }
     }
