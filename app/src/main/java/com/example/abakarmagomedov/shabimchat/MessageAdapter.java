@@ -101,7 +101,6 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
 
     }
-
 }
 
 

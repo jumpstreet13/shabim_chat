@@ -49,10 +49,10 @@ public class ChatRoomActivity extends AppCompatActivity implements ChatAdapter.C
                 message.setSender(true);
                 messages.add(0, message);
                 messageAdapter.notifyDataSetChanged();
+                messageEditText.setText("");
             }
         });
     }
-
 
     @Override
     public void chatClicked(int chatId) {

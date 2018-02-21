@@ -12,7 +12,7 @@ public class TimeUtils {
 
     public static String formatDateFromLong(long time) {
         Date date = new Date(time);
-        SimpleDateFormat df2 = new SimpleDateFormat("dd/MM/yy", Locale.getDefault());
+        SimpleDateFormat df2 = new SimpleDateFormat("hh:mm", Locale.getDefault());
         return df2.format(date);
     }
 }
