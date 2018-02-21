@@ -60,6 +60,4 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         logoView.setController(controller);
     }
-
-
 }

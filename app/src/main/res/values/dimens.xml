@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small_margin">2dp</dimen>
+    <dimen name="middle_margin">4dp</dimen>
+    <dimen name="big_margin">8dp</dimen>
+    <dimen name="large_margin">16dp</dimen>
+
+
+    <dimen name="small_padding">2dp</dimen>
+    <dimen name="middle_padding">4dp</dimen>
+    <dimen name="big_padding">8dp</dimen>
+    <dimen name="large_padding">16dp</dimen>
+</resources>
