@@ -15,16 +15,18 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize">
-
-        </activity>
-        <activity android:name=".ChatActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChatActivity"></activity>
         <activity android:name=".ChatRoomActivity" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:windowSoftInputMode="adjustResize">>
+        </activity>
     </application>
 
 </manifest>

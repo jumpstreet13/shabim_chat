@@ -36,4 +36,8 @@ dependencies {
     implementation 'com.android.support:support-core-utils:26.1.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'jp.wasabeef:fresco-processors:2.1.0'
+    implementation('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
 }

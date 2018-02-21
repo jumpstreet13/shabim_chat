@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:ems">10</item>
+        <item name="backgroundTint">@android:color/holo_green_light</item>
+    </style>
+
 </resources>
