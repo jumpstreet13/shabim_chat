@@ -1,56 +1,90 @@
 package com.example.abakarmagomedov.shabimchat;
 
-import android.content.Intent;
-import android.net.Uri;
+
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.example.abakarmagomedov.shabimchat.Entity.Message;
 
-import jp.wasabeef.fresco.processors.BlurPostprocessor;
-import jp.wasabeef.fresco.processors.CombinePostProcessors;
-import jp.wasabeef.fresco.processors.GrayscalePostprocessor;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ChatFragment.ChatClickedListener {
 
-    private Button loginButton;
-    private SimpleDraweeView logoView;
-    private CombinePostProcessors processor;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loginButton = findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                startActivity(intent);
-            }
-        });
-        logoView = findViewById(R.id.logo_view);
-        processor = new CombinePostProcessors.Builder()
-                .add(new BlurPostprocessor(this))
-                .add(new GrayscalePostprocessor())
-                .build();
-        ImageRequest request =
-                ImageRequestBuilder.newBuilderWithSource(Uri.parse("https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Search_logo.max-2800x2800.png"))
-                        .setPostprocessor(processor)
-                        .build();
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request)
-                .build();
-        logoView.setController(controller);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        mDrawerLayout.closeDrawers();
+                        switch (menuItem.getGroupId()) {
+                            case 0:
+                                Fragment chatFragment = ChatFragment.newInstance();
+                                transaction.replace(R.id.content_frame, chatFragment);
+                                transaction.addToBackStack(null);
+                                transaction.commit();
+                                break;
+                            case 1:
+
+                                break;
+
+                            case 2:
+                                break;
+                        }
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+                        return true;
+                    }
+                });
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    public void chatRoomClicked(int chatId) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment chatRoomFragment = ChatRoomFragment.newInstance(chatId);
+        transaction.replace(R.id.content_frame, chatRoomFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }
