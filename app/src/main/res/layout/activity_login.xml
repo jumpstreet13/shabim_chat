@@ -14,6 +14,7 @@
         android:layout_marginEnd="22dp"
         android:layout_marginStart="22dp"
         android:layout_marginTop="40dp"
+        android:textColorHint="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,8 +27,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Имя пользователя"
-            android:inputType="textPersonName"
-            android:textColorLink="@android:color/holo_green_light" />
+            android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -37,6 +37,7 @@
         android:layout_marginEnd="22dp"
         android:layout_marginStart="22dp"
         android:layout_marginTop="18dp"
+        android:textColorHint="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +51,6 @@
             android:ems="10"
             android:hint="Пароль"
             android:inputType="textPassword"
-            android:textColorLink="@android:color/holo_green_light"
             android:visibility="visible" />
     </android.support.design.widget.TextInputLayout>
 
