@@ -1,11 +1,14 @@
 package com.example.abakarmagomedov.shabimchat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -24,11 +27,20 @@ public class LoginActivity extends AppCompatActivity {
     private SimpleDraweeView logoView;
     private CombinePostProcessors processor;
     private TextView registrationTextView;
+    private TextView forgotPass;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        forgotPass = findViewById(R.id.forgot_pass_tv);
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmailDialog();
+            }
+        });
         loginButton = findViewById(R.id.login_button);
         registrationTextView = findViewById(R.id.registration_textview);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +70,30 @@ public class LoginActivity extends AppCompatActivity {
                 .setImageRequest(request)
                 .build();
         logoView.setController(controller);
+    }
+
+    private void showEmailDialog (){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage("Введите свой Email адрес: ");
+
+        final EditText email_et = new EditText(this);
+
+        dialog.setView(email_et);
+        dialog.setPositiveButton("Oк", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                email = email_et.getText().toString();
+                dialog.cancel();
+            }
+        });
+
+        dialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 
 
