@@ -8,4 +8,14 @@
     <string name="enter">Вход</string>
     <string name="registration">Зарегистрироваться</string>
     <string name="forgot_password">Забыли пароль?</string>
+    <string name="notification_sound">Звуки уведомлений</string>
+    <string name="settings">Настройки</string>
+    <string name="vibration">Вибрация</string>
+    <string name="version">version: </string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">Ок</string>
+    <string name="next">Далее</string>\
+    <string name="send">Отправить</string>
 </resources>
