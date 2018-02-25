@@ -9,13 +9,12 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_username"
-        android:layout_width="340dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/text_input_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        android:layout_margin="@dimen/little_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_view">
 
@@ -25,18 +24,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Имя пользователя"
+            android:hint="@string/user_name"
             android:inputType="textPersonName"
             android:textColorLink="@android:color/holo_green_light" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_password"
-        android:layout_width="340dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/forgot_pass_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +45,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Пароль"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textColorLink="@android:color/holo_green_light"
             android:visibility="visible" />
@@ -57,12 +54,10 @@
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="340dp"
-        android:layout_height="62dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="18dp"
-        android:text="Вход"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="@string/enter"
+        app:layout_constraintBottom_toTopOf="@+id/registration_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,24 +66,23 @@
     <TextView
         android:id="@+id/registration_textview"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="16dp"
-        android:text="Зарегистрироваться"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        android:paddingBottom="@dimen/little_padding"
+        android:layout_margin="@dimen/middle_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
     <TextView
         android:id="@+id/forgot_pass_tv"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginEnd="138dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="17dp"
-        android:text="Забыли пароль?"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/middle_margin"
+        android:text="@string/forgot_password"
+        app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,11 +92,13 @@
         android:id="@+id/logo_view"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="58dp"
+        android:layout_margin="@dimen/big_margin"
+        app:layout_constraintBottom_toTopOf="@+id/text_input_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
 
