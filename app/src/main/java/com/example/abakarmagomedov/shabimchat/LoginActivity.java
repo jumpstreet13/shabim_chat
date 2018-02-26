@@ -1,8 +1,6 @@
 package com.example.abakarmagomedov.shabimchat;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -31,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private CombinePostProcessors processor;
     private TextView registrationTextView;
     private TextView forgotPass;
-    private String email;
+    private String eMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         registrationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-//                startActivity(intent);
-                NotificationManager notify = new NotificationManager(getApplicationContext());
-                notify.soundNotify(false);
-                notify.showNotify(1,"Уведомление", "Программирование это джаст вери просто");
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(intent);
             }
         });
         logoView = findViewById(R.id.logo_view);
@@ -88,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setPositiveButton("Oк", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                email = email_et.getText().toString();
+                eMail = email_et.getText().toString();
                 dialog.cancel();
             }
         });
@@ -100,6 +94,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    public String get_Email() {
+        return eMail;
     }
 
 
