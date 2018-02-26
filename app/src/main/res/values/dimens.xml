@@ -16,4 +16,12 @@
     <dimen name="large_padding">32dp</dimen>
 
 
+    <!--size-->
+    <dimen name="little_size">2sp</dimen>
+    <dimen name="small_size">4sp</dimen>
+    <dimen name="middle_size">8sp</dimen>
+    <dimen name="big_size">16sp</dimen>
+    <dimen name="large_size">32sp</dimen>
+
+
 </resources>
