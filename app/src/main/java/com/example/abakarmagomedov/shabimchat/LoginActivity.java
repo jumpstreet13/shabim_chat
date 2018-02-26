@@ -58,8 +58,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
 //                startActivity(intent);
-                //NotificationManager notify = new NotificationManager();
-                //notify.showNotify("Здарова","але мале");
+                NotificationManager notify = new NotificationManager(getApplicationContext());
+                notify.soundNotify(false);
+                notify.showNotify(1,"Уведомление", "Программирование это джаст вери просто");
             }
         });
         logoView = findViewById(R.id.logo_view);

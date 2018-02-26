@@ -1,12 +1,13 @@
 package com.example.abakarmagomedov.shabimchat.Utilities;
 
-import android.app.Notification;
-import android.content.ContentProvider;
+
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.abakarmagomedov.shabimchat.R;
+
+import java.net.URI;
 
 /**
  * Created by Никита on 25.02.2018.
@@ -14,27 +15,26 @@ import com.example.abakarmagomedov.shabimchat.R;
 
 public class NotificationManager {
 
-    private boolean sound;
-    private Context service_context;
+    private boolean soundOn;
+    private Context serviceContext;
 
-    public NotificationManager(Context service_context) {
-        service_context.this = service_context;
+    public NotificationManager(Context serviceContext) {this.serviceContext = serviceContext;
     }
 
-    public void showNotify(String title, String description) {
-
-        android.app.NotificationManager notificationManager = (android.app.NotificationManager) service_context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-                Notification.Builder notificationBuilder = new Notification.Builder(service_context)
+    public void showNotify(int id, String title, String description) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(serviceContext.getApplicationContext())
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(title)
                 .setContentText(description);
 
-        notificationManager.notify(1, notificationBuilder.build());
+        android.app.NotificationManager notificationManager = (android.app.NotificationManager) serviceContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(id, notificationBuilder.build());
+    }
 
     }
 
-    public void soundOnOff(boolean sound) {
-        this.sound = sound;
+    public void soundNotify(boolean soundOn) {
+        this.soundOn = soundOn;
     }
 }
