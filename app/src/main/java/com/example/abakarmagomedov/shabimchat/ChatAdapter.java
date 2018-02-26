@@ -8,8 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.abakarmagomedov.shabimchat.Entity.ChatEntity;
-import com.facebook.common.util.UriUtil;
+import com.example.abakarmagomedov.shabimchat.entity.ChatEntity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;

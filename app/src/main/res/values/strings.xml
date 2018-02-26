@@ -8,4 +8,6 @@
     <string name="enter">Вход</string>
     <string name="registration">Зарегистрироваться</string>
     <string name="forgot_password">Забыли пароль?</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
 </resources>

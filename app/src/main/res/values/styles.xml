@@ -13,4 +13,8 @@
         <item name="backgroundTint">@android:color/holo_green_light</item>
     </style>
 
+    <style name="ShabimDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPurpleAccent</item>
+    </style>
+
 </resources>

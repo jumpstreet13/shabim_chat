@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.abakarmagomedov.shabimchat.Entity.Message;
+import com.example.abakarmagomedov.shabimchat.entity.Message;
 
 import java.util.List;
 

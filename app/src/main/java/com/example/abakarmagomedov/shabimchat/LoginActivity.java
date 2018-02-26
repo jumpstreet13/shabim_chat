@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.abakarmagomedov.shabimchat.delegates.ErrorDialogDelegate;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView registrationTextView;
     private TextView forgotPass;
     private String email;
+    private ErrorDialogDelegate errorDialogDelegate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +44,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         loginButton = findViewById(R.id.login_button);
+        errorDialogDelegate = new ErrorDialogDelegate(getSupportFragmentManager());
         registrationTextView = findViewById(R.id.registration_textview);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+                errorDialogDelegate.showError("Oh i'm fucking coming");
+                //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                //startActivity(intent);
             }
         });
         registrationTextView.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         logoView.setController(controller);
     }
 
-    private void showEmailDialog (){
+    private void showEmailDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage("Введите свой Email адрес: ");
 
