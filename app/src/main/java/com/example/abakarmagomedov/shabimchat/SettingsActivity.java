@@ -42,10 +42,11 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (sound_sw.isChecked()) {
                     Toast.makeText(getApplicationContext(), "Звуковые уведомления включены", Toast.LENGTH_SHORT).show();
-//                    notification.sound = RingtoneManager.getActualDefaultRingtoneUri
+                    com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager.set_SoundNotify(true);
 //                    Написать кокманду включения и отключения звука на устройстве
                 } else {
                     Toast.makeText(getApplicationContext(), "Звуковые уведомления отключены", Toast.LENGTH_SHORT).show();
+                    com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager.set_SoundNotify(false);
                 }
             }
         });
@@ -54,9 +55,11 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (vibro_sw.isChecked()) {
                     Toast.makeText(getApplicationContext(), "Вибрация включена", Toast.LENGTH_SHORT).show();
+                    com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager.set_VibrateNotify(true);
                     vibrator.vibrate(50);
                 } else {
                     Toast.makeText(getApplicationContext(), "Вибрация отключена", Toast.LENGTH_SHORT).show();
+                    com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager.set_VibrateNotify(false);
                     vibrator.cancel();
                 }
             }

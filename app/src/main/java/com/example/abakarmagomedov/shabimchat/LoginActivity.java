@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -53,8 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         registrationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+//                startActivity(intent);
+                NotificationManager.set_SoundNotify(true);
+                NotificationManager.showNotify(1,"Хеллоу","аля улю");
             }
         });
         logoView = findViewById(R.id.logo_view);
