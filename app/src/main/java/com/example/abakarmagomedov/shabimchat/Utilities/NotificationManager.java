@@ -21,15 +21,15 @@ import com.example.abakarmagomedov.shabimchat.R;
 
 public class NotificationManager {
 
-    private static boolean soundOn;
-    private static boolean vibrateOn;
-    private static Context serviceContext;
+    private  boolean soundOn;
+    private  boolean vibrateOn;
+    private  Context serviceContext;
 
     public NotificationManager(Context serviceContext) {
         this.serviceContext = serviceContext;
     }
 
-    public static void showNotify(int id, String title, String description) {
+    public void showNotify(int id, String title, String description) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(serviceContext.getApplicationContext())
                     .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -56,24 +56,29 @@ public class NotificationManager {
             notificationChannel.setLightColor(Color.BLUE);
             notificationChannel.setSound(Settings.System.DEFAULT_NOTIFICATION_URI, audioAttributesBuilder.build());
 
+            Notification.Builder notificationBuilder = new Notification.Builder(serviceContext, "1");
+
+            notificationBuilder.setContentTitle(title);
+            notificationBuilder.setContentText(description);
+            notificationBuilder.build();
         }
 
 
     }
 
-    public static void set_SoundNotify(boolean sound) {
+    public void set_SoundNotify(boolean sound) {
         soundOn = sound;
     }
 
-    public static void set_VibrateNotify(boolean vibrate) {
+    public void set_VibrateNotify(boolean vibrate) {
         vibrateOn = vibrate;
     }
 
-    public static boolean get_SoundNotify() {
+    public boolean get_SoundNotify() {
         return soundOn;
     }
 
-    public static boolean get_VibrateNotify() {
+    public boolean get_VibrateNotify() {
         return vibrateOn;
     }
 }
