@@ -43,21 +43,30 @@
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:background="@android:color/transparent"
-            android:hint="Enter message"
+            android:hint="@string/enter_message"
             android:maxLines="6" />
+
+        <ImageView
+            android:id="@+id/record"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_mic_black" />
 
         <Button
             android:id="@+id/button_chatbox_send"
-            android:layout_width="64dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
+            android:layout_weight="2"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
-            android:text="SEND"
-            android:textSize="14dp" />
+            android:text="@string/send"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

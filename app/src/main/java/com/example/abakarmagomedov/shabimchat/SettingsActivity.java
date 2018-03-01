@@ -37,28 +37,22 @@ public class SettingsActivity extends AppCompatActivity {
 //        final Notification notification = new Notification();
 //        final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        sound_sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (sound_sw.isChecked()) {
-                    Toast.makeText(getApplicationContext(), "Звуковые уведомления включены", Toast.LENGTH_SHORT).show();
+        sound_sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (sound_sw.isChecked()) {
+                Toast.makeText(getApplicationContext(), "Звуковые уведомления включены", Toast.LENGTH_SHORT).show();
 //                    notification.sound = RingtoneManager.getActualDefaultRingtoneUri
 //                    Написать кокманду включения и отключения звука на устройстве
-                } else {
-                    Toast.makeText(getApplicationContext(), "Звуковые уведомления отключены", Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Звуковые уведомления отключены", Toast.LENGTH_SHORT).show();
             }
         });
-        vibro_sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (vibro_sw.isChecked()) {
-                    Toast.makeText(getApplicationContext(), "Вибрация включена", Toast.LENGTH_SHORT).show();
-                    vibrator.vibrate(50);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Вибрация отключена", Toast.LENGTH_SHORT).show();
-                    vibrator.cancel();
-                }
+        vibro_sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (vibro_sw.isChecked()) {
+                Toast.makeText(getApplicationContext(), "Вибрация включена", Toast.LENGTH_SHORT).show();
+                vibrator.vibrate(50);
+            } else {
+                Toast.makeText(getApplicationContext(), "Вибрация отключена", Toast.LENGTH_SHORT).show();
+                vibrator.cancel();
             }
         });
 

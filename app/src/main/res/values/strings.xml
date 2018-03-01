@@ -10,4 +10,6 @@
     <string name="forgot_password">Забыли пароль?</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>
+    <string name="enter_message">Enter message</string>
+    <string name="send">SEND</string>
 </resources>

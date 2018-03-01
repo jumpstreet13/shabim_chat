@@ -1,19 +1,24 @@
 package com.example.abakarmagomedov.shabimchat;
 
 
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.abakarmagomedov.shabimchat.entity.Message;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +34,8 @@ public class ChatRoomFragment extends Fragment {
     private List<Message> messages;
     private EditText messageEditText;
     private MessageAdapter messageAdapter;
+    private ImageView record;
+    private MediaRecorder mRecorder = null;
 
     public ChatRoomFragment() {
         // Required empty public constructor
@@ -51,11 +58,12 @@ public class ChatRoomFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_room, container, false);
         chatRecyclerView = view.findViewById(R.id.recyclerview_message_list);
         sendMessageButton = view.findViewById(R.id.button_chatbox_send);
+        record = view.findViewById(R.id.record);
         messageEditText = view.findViewById(R.id.edittext_chatbox);
         messages = new ArrayList<>();
         messages.add(new Message("Hello my friend", System.currentTimeMillis()));
@@ -64,19 +72,40 @@ public class ChatRoomFragment extends Fragment {
         layoutManager.setReverseLayout(true);
         chatRecyclerView.setLayoutManager(layoutManager);
         chatRecyclerView.setAdapter(messageAdapter);
-        sendMessageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Message message = new Message();
-                message.setMessage(messageEditText.getText().toString().trim());
-                message.setCreatedAt(System.currentTimeMillis());
-                message.setSender(true);
-                messages.add(0, message);
-                messageAdapter.notifyDataSetChanged();
-                messageEditText.setText("");
-            }
+        sendMessageButton.setOnClickListener(v -> {
+            Message message = new Message();
+            message.setMessage(messageEditText.getText().toString().trim());
+            message.setCreatedAt(System.currentTimeMillis());
+            message.setSender(true);
+            messages.add(0, message);
+            messageAdapter.notifyDataSetChanged();
+            messageEditText.setText("");
         });
+
+        record.setOnClickListener(v -> startRecording());
         return view;
+    }
+
+    private void startRecording() {
+        mRecorder = new MediaRecorder();
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFile("userRecord");
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            mRecorder.prepare();
+        } catch (IOException e) {
+            Log.e("EXCEPTION", "prepare() failed");
+        }
+
+        mRecorder.start();
+    }
+
+    private void stopRecording() {
+        mRecorder.stop();
+        mRecorder.release();
+        mRecorder = null;
     }
 
 }

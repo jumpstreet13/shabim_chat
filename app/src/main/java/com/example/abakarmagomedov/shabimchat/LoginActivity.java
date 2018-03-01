@@ -38,29 +38,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         forgotPass = findViewById(R.id.forgot_pass_tv);
-        forgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmailDialog();
-            }
-        });
+        forgotPass.setOnClickListener(v -> showEmailDialog());
         loginButton = findViewById(R.id.login_button);
         errorDialogDelegate = new ErrorDialogDelegate(getSupportFragmentManager());
         registrationTextView = findViewById(R.id.registration_textview);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                errorDialogDelegate.showError("Oh i'm fucking coming");
-                //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                //startActivity(intent);
-            }
+        loginButton.setOnClickListener(v -> {
+            errorDialogDelegate.showError("Oh i'm fucking coming");
+            //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            //startActivity(intent);
         });
-        registrationTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                startActivity(intent);
-            }
+        registrationTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+            startActivity(intent);
         });
         logoView = findViewById(R.id.logo_view);
         processor = new CombinePostProcessors.Builder()
@@ -84,20 +73,12 @@ public class LoginActivity extends AppCompatActivity {
         final EditText email_et = new EditText(this);
 
         dialog.setView(email_et);
-        dialog.setPositiveButton("Oк", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                email = email_et.getText().toString();
-                dialog.cancel();
-            }
+        dialog.setPositiveButton("Oк", (dialog1, which) -> {
+            email = email_et.getText().toString();
+            dialog1.cancel();
         });
 
-        dialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        dialog.setNegativeButton("Отмена", (dialog12, which) -> dialog12.cancel());
         dialog.show();
     }
 

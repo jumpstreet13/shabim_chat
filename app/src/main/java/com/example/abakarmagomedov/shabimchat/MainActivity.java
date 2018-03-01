@@ -30,30 +30,27 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.Chat
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        mDrawerLayout.closeDrawers();
-                        switch (menuItem.getGroupId()) {
-                            case 0:
-                                Fragment chatFragment = ChatFragment.newInstance();
-                                transaction.replace(R.id.content_frame, chatFragment);
-                                transaction.addToBackStack(null);
-                                transaction.commit();
-                                break;
-                            case 1:
+                menuItem -> {
+                    menuItem.setChecked(true);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    mDrawerLayout.closeDrawers();
+                    switch (menuItem.getGroupId()) {
+                        case 0:
+                            Fragment chatFragment = ChatFragment.newInstance();
+                            transaction.replace(R.id.content_frame, chatFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                            break;
+                        case 1:
 
-                                break;
+                            break;
 
-                            case 2:
-                                break;
-                        }
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-                        return true;
+                        case 2:
+                            break;
                     }
+                    // Add code here to update the UI based on the item selected
+                    // For example, swap UI fragments here
+                    return true;
                 });
 
     }
