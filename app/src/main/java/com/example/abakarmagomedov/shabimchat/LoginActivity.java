@@ -1,7 +1,6 @@
 package com.example.abakarmagomedov.shabimchat;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -55,11 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         registrationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-//                startActivity(intent);
-                NotificationManager notificationManager = new NotificationManager(getApplicationContext());
-                notificationManager.set_SoundNotify(true);
-                notificationManager.showNotify(1,"Хеллоу","аля улю");
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(intent);
             }
         });
         logoView = findViewById(R.id.logo_view);
@@ -79,12 +74,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showEmailDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setMessage("Введите свой Email адрес: ");
+        dialog.setMessage(R.string.enter_email);
 
         final EditText email_et = new EditText(this);
 
         dialog.setView(email_et);
-        dialog.setPositiveButton("Oк", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 eMail = email_et.getText().toString();
@@ -92,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        dialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

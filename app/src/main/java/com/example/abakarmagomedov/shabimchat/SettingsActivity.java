@@ -1,11 +1,7 @@
 package com.example.abakarmagomedov.shabimchat;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
@@ -43,11 +39,10 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (sound_sw.isChecked()) {
-                    Toast.makeText(getApplicationContext(), "Звуковые уведомления включены", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.sound_notify_on, Toast.LENGTH_SHORT).show();
                     notificationManager.set_SoundNotify(true);
-//                    Написать кокманду включения и отключения звука на устройстве
                 } else {
-                    Toast.makeText(getApplicationContext(), "Звуковые уведомления отключены", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.sound_notify_off, Toast.LENGTH_SHORT).show();
                     notificationManager.set_SoundNotify(false);
                 }
             }
@@ -56,11 +51,11 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (vibro_sw.isChecked()) {
-                    Toast.makeText(getApplicationContext(), "Вибрация включена", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.vibro_notify_on, Toast.LENGTH_SHORT).show();
                     notificationManager.set_VibrateNotify(true);
-                    vibrator.vibrate(50);
+                    vibrator.vibrate(100);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Вибрация отключена", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.vibro_notify_off, Toast.LENGTH_SHORT).show();
                     notificationManager.set_VibrateNotify(false);
                     vibrator.cancel();
                 }

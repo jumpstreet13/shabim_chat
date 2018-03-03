@@ -1,16 +1,14 @@
 package com.example.abakarmagomedov.shabimchat.Utilities;
 
 
-import android.app.Notification;
+
 import android.app.NotificationChannel;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.example.abakarmagomedov.shabimchat.R;
 
@@ -34,10 +32,10 @@ public class NotificationManager {
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(serviceContext.getApplicationContext())
                     .setSmallIcon(R.mipmap.ic_launcher_round)
                     .setContentTitle(title)
-                    .setContentText(description);
-//                    .setLights(1,3,4);
+                    .setContentText(description)
+                    .setLights(Color.BLUE,500,2000);
             if (vibrateOn) {
-                notificationBuilder.setVibrate(new long[50]);
+                notificationBuilder.setVibrate(new long[]{200,200});
             }
             if (soundOn) {
                 notificationBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
@@ -46,22 +44,28 @@ public class NotificationManager {
             android.app.NotificationManager notificationManager = (android.app.NotificationManager) serviceContext.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(id, notificationBuilder.build());
         } else {
-//            Toast.makeText(serviceContext.getApplicationContext(), "Уведомления не работают :)", Toast.LENGTH_SHORT).show();
-            AudioAttributes.Builder audioAttributesBuilder = new AudioAttributes.Builder();
-            //audioAttributesBuilder.setContentType(AudioAttributes.CONTENT_TYPE_MUSIC);
-            NotificationChannel notificationChannel = new NotificationChannel("1","Messages", android.app.NotificationManager.IMPORTANCE_LOW);
-            notificationChannel.enableLights(true);
-            notificationChannel.enableVibration(true);
-            notificationChannel.setVibrationPattern(new long [50]);
-            notificationChannel.setLightColor(Color.BLUE);
-            notificationChannel.setSound(Settings.System.DEFAULT_NOTIFICATION_URI, audioAttributesBuilder.build());
+            NotificationChannel channel = new NotificationChannel("1","Messages", android.app.NotificationManager.IMPORTANCE_DEFAULT);
+            channel.enableLights(true);
+            channel.setLightColor(Color.BLUE);
+            if(vibrateOn){
+                channel.enableVibration(true);
+                channel.setVibrationPattern(new long[]{200,200});
+            }
+            if (soundOn) {
+                AudioAttributes.Builder audioAttributesBuilder = new AudioAttributes.Builder();
+                channel.setSound(Settings.System.DEFAULT_NOTIFICATION_URI, audioAttributesBuilder.build());
+            }
 
-            Notification.Builder notificationBuilder = new Notification.Builder(serviceContext, "1");
+            android.app.NotificationManager notificationManager = (android.app.NotificationManager) serviceContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
 
-            notificationBuilder.setContentTitle(title);
-            notificationBuilder.setContentText(description);
-            notificationBuilder.build();
-        }
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(serviceContext, "1")
+                    .setContentTitle(title)
+                    .setContentText(description)
+                    .setSmallIcon(R.mipmap.ic_launcher_round);
+
+            notificationManager.notify(id,notificationBuilder.build());
+         }
 
 
     }
