@@ -82,7 +82,9 @@ public class ChatRoomFragment extends Fragment {
             messageEditText.setText("");
         });
 
-        record.setOnClickListener(v -> startRecording());
+        record.setOnClickListener(v -> {
+            startRecording();
+        });
         return view;
     }
 
