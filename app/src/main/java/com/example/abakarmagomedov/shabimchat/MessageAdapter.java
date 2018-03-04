@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.abakarmagomedov.shabimchat.entity.Message;
@@ -40,7 +41,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 return new SentMessageHolder(view);
             case VIEW_TYPE_AUDIO_MESSAGE_SENT:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.audio_item, parent, false);
+                        .inflate(R.layout.sent_audio_message_item, parent, false);
                 return new SentMessageHolder(view);
             default:
                 return null;
@@ -104,7 +105,25 @@ public class MessageAdapter extends RecyclerView.Adapter {
             sentMessage.setText(message.getMessage());
             sentMessageTime.setText(TimeUtils.formatDateFromLong(message.getCreatedAt()));
         }
+    }
 
+    private static class SentAudioMessageHolder extends RecyclerView.ViewHolder {
+
+        private ImageView playMusic;
+
+        public SentAudioMessageHolder(View itemView) {
+            super(itemView);
+            playMusic = itemView.findViewById(R.id.playMusic);
+            playMusic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
+
+        void bind(Message message) {
+        }
     }
 }
 
