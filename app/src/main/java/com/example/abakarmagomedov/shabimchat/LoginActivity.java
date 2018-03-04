@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager;
 import com.example.abakarmagomedov.shabimchat.delegates.ErrorDialogDelegate;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -48,8 +49,13 @@ public class LoginActivity extends AppCompatActivity {
             //startActivity(intent);
         });
         registrationTextView.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+//            startActivity(intent);
+            NotificationManager notificationManager = new NotificationManager(getApplication());
+            notificationManager.setSoundNotify(true);
+            notificationManager.setVibrateNotify(true);
+            notificationManager.showNotify(1,"Опа", "Здарова");
+
         });
         logoView = findViewById(R.id.logo_view);
         processor = new CombinePostProcessors.Builder()
@@ -68,17 +74,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showEmailDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setMessage("Введите свой Email адрес: ");
+        dialog.setMessage(R.string.enter_email);
 
         final EditText email_et = new EditText(this);
 
         dialog.setView(email_et);
-        dialog.setPositiveButton("Oк", (dialog1, which) -> {
+        dialog.setPositiveButton(R.string.ok, (dialog1, which) -> {
             email = email_et.getText().toString();
             dialog1.cancel();
         });
 
-        dialog.setNegativeButton("Отмена", (dialog12, which) -> dialog12.cancel());
+        dialog.setNegativeButton(R.string.cancel, (dialog12, which) -> dialog12.cancel());
         dialog.show();
     }
 
