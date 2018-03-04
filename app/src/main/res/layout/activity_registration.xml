@@ -11,6 +11,7 @@
         android:id="@+id/confirm_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -23,7 +24,7 @@
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
+            android:hint="@string/user_name"
             android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
 
@@ -31,6 +32,7 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="61dp"
+        android:textColorHint="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/nickname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -43,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPersonName" />
 
     </android.support.design.widget.TextInputLayout>
@@ -52,6 +54,7 @@
         android:id="@+id/nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -63,19 +66,21 @@
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirm Password" />
+            android:hint="@string/confirm_password" />
 
     </android.support.design.widget.TextInputLayout>
 
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nickname" />
 </android.support.constraint.ConstraintLayout>
