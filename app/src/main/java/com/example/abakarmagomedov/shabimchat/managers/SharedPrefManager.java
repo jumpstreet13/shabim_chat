@@ -35,6 +35,6 @@ public class SharedPrefManager {
     }
 
     public boolean readSoundSetting() {
-        return sharedPreference.getBoolean(SOUND_SETTING, false);
+        return sharedPreference.getBoolean(SOUND_SETTING, true);
     }
 }

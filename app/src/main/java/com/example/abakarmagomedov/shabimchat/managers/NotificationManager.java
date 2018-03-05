@@ -57,6 +57,7 @@ public class NotificationManager {
         notificationManager.notify(id, notificationBuilder.build());
     }
 
+    //На доработку!
     private void buildNotifyHighSDK(int id, String title, String description) {
         if (Build.VERSION.SDK_INT >= 26) {
             android.app.NotificationManager notificationManager = (android.app.NotificationManager) serviceContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -104,10 +105,10 @@ public class NotificationManager {
     }
 
     public boolean getSoundNotify() {
-        return soundOn;
+        return prefManager.readSoundSetting();
     }
 
     public boolean getVibrateNotify() {
-        return vibrateOn;
+        return prefManager.readVibrateSetting();
     }
 }

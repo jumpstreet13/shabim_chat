@@ -9,6 +9,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.abakarmagomedov.shabimchat.managers.NotificationManager;
+import com.example.abakarmagomedov.shabimchat.managers.SharedPrefManager;
+
 
 /**
  * Created by Никита on 23.02.2018.
@@ -29,6 +32,8 @@ public class SettingsActivity extends AppCompatActivity {
         vibro_sw = findViewById(R.id.vibro_sw);
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         com.example.abakarmagomedov.shabimchat.managers.NotificationManager notificationManager = new com.example.abakarmagomedov.shabimchat.managers.NotificationManager(getApplication());
+
+        initializeSwitches();
 
         sound_sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (sound_sw.isChecked()) {
@@ -56,5 +61,18 @@ public class SettingsActivity extends AppCompatActivity {
     public void setAppVersion(String version) {
         appVersion_tv = findViewById(R.id.appVersion_tv);
         appVersion_tv.setText("Version: " + version);
+    }
+
+    private void initializeSwitches() {
+        SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplication());
+
+        if(sharedPrefManager.readSoundSetting())
+            sound_sw.setChecked(true);
+        else sound_sw.setChecked(false);
+
+        if (sharedPrefManager.readVibrateSetting())
+            vibro_sw.setChecked(true);
+        else vibro_sw.setChecked(false);
+
     }
 }

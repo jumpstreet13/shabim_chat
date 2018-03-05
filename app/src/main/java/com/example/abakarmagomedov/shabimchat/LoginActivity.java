@@ -1,6 +1,7 @@
 package com.example.abakarmagomedov.shabimchat;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,12 +46,14 @@ public class LoginActivity extends AppCompatActivity {
             //startActivity(intent);
         });
         registrationTextView.setOnClickListener(v -> {
-//            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-//            startActivity(intent);
+
+            //для тесту
             NotificationManager notificationManager = new NotificationManager(getApplication());
-            notificationManager.setSoundNotify(true);
-            notificationManager.setVibrateNotify(true);
             notificationManager.showNotify(1,"Опа", "Здарова");
+            //для тесту
+
+            Intent intent = new Intent(LoginActivity.this, SettingsActivity.class);
+            startActivity(intent);
 
         });
         logoView = findViewById(R.id.logo_view);

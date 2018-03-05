@@ -27,6 +27,7 @@
         <activity
             android:name=".RegistrationActivity"
             android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>
