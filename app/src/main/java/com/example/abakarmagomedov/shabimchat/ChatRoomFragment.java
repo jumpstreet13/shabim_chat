@@ -31,7 +31,7 @@ public class ChatRoomFragment extends Fragment {
     private int chatId;
     private RecyclerView chatRecyclerView;
     private Button sendMessageButton;
-    private List<Message> messages;
+    private List<ChatEntityMarker> messages;
     private EditText messageEditText;
     private MessageAdapter messageAdapter;
     private ImageView record;

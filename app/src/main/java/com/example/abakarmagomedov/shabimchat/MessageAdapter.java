@@ -1,5 +1,6 @@
 package com.example.abakarmagomedov.shabimchat;
 
+import android.app.PendingIntent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.abakarmagomedov.shabimchat.entity.AudioMessage;
 import com.example.abakarmagomedov.shabimchat.entity.Message;
 
 import java.util.List;
@@ -20,11 +22,17 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
     private static final int VIEW_TYPE_AUDIO_MESSAGE_SENT = 3;
+    private PlayMusicClickedListener listener;
 
-    private List<Message> messages;
+    public interface PlayMusicClickedListener {
+        void onMusicPlay(String pathToAudio);
+    }
 
-    public MessageAdapter(List<Message> messages) {
+    private List<ChatEntityMarker> messages;
+
+    public MessageAdapter(List<ChatEntityMarker> messages, PlayMusicClickedListener listener) {
         this.messages = messages;
+        this.listener = listener;
     }
 
     @Override
@@ -50,22 +58,36 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Message message = messages.get(position);
+        if (messages instanceof Message) {
+            Message message = (Message) messages.get(position);
 
-        switch (holder.getItemViewType()) {
-            case VIEW_TYPE_MESSAGE_RECEIVED:
-                ((ReceiveMessageHolder) holder).bind(message);
-                break;
-            case VIEW_TYPE_MESSAGE_SENT:
-                ((SentMessageHolder) holder).bind(message);
-                break;
+            switch (holder.getItemViewType()) {
+                case VIEW_TYPE_MESSAGE_RECEIVED:
+                    ((ReceiveMessageHolder) holder).bind(message);
+                    break;
+                case VIEW_TYPE_MESSAGE_SENT:
+                    ((SentMessageHolder) holder).bind(message);
+                    break;
+            }
+        }
+        if (messages instanceof AudioMessage) {
+            AudioMessage message = (AudioMessage) messages.get(position);
+
+            switch (holder.getItemViewType()) {
+                case VIEW_TYPE_MESSAGE_RECEIVED:
+                    // ((ReceiveMessageHolder) holder).bind(message);
+                    break;
+                case VIEW_TYPE_MESSAGE_SENT:
+                    ((SentAudioMessageHolder) holder).bind(message, listener);
+                    break;
+            }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        Message message = messages.get(position);
-        if (message.isSender()) return VIEW_TYPE_MESSAGE_SENT;
+        ChatEntityMarker message = messages.get(position);
+        if (message.isFromSender()) return VIEW_TYPE_MESSAGE_SENT;
         else return VIEW_TYPE_MESSAGE_RECEIVED;
     }
 
@@ -114,15 +136,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
         public SentAudioMessageHolder(View itemView) {
             super(itemView);
             playMusic = itemView.findViewById(R.id.playMusic);
-            playMusic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
 
-        void bind(Message message) {
+        void bind(AudioMessage message, PlayMusicClickedListener clickedListener) {
+            playMusic.setOnClickListener(v -> clickedListener.onMusicPlay(message.getPathToFile()));
         }
     }
 }
