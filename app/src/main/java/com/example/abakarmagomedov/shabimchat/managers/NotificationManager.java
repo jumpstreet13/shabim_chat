@@ -1,4 +1,4 @@
-package com.example.abakarmagomedov.shabimchat.Utilities;
+package com.example.abakarmagomedov.shabimchat.managers;
 
 
 import android.app.NotificationChannel;
@@ -14,8 +14,6 @@ import com.example.abakarmagomedov.shabimchat.R;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Method;
-
 
 /**
  * Created by Никита on 25.02.2018.
@@ -26,9 +24,11 @@ public class NotificationManager {
     private boolean soundOn;
     private boolean vibrateOn;
     private Context serviceContext;
+    private SharedPrefManager prefManager;
 
     public NotificationManager(Context serviceContext) {
         this.serviceContext = serviceContext;
+        prefManager = new SharedPrefManager(serviceContext);
     }
 
     public void showNotify(int id, String title, String description) {
@@ -71,15 +71,9 @@ public class NotificationManager {
         }
     }
 
-    private void setVariables(){
-        Bundle bundle = new Bundle();
-//        if (bundle.get("soundOn") == null)
-//            soundOn = false;
-//        else soundOn = bundle.getBoolean("soundOn");
-//
-//        if (bundle.get("vibroOn") == null)
-//            vibrateOn = true;
-//        else vibrateOn = bundle.getBoolean("vibroOn");
+    private void setVariables() {
+        soundOn = prefManager.readSoundSetting();
+        vibrateOn = prefManager.readVibrateSetting();
     }
 
     @Nullable
@@ -102,13 +96,11 @@ public class NotificationManager {
     }
 
     public void setSoundNotify(boolean sound) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("soundOn", sound);
+        prefManager.writeSoundSetting(sound);
     }
 
     public void setVibrateNotify(boolean vibrate) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("vibroOn", vibrate);
+        prefManager.writeVibrateSetting(vibrate);
     }
 
     public boolean getSoundNotify() {

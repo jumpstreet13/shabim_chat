@@ -1,15 +1,10 @@
 package com.example.abakarmagomedov.shabimchat;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         sound_sw = findViewById(R.id.sound_sw);
         vibro_sw = findViewById(R.id.vibro_sw);
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager notificationManager = new com.example.abakarmagomedov.shabimchat.Utilities.NotificationManager(getApplication());
+        com.example.abakarmagomedov.shabimchat.managers.NotificationManager notificationManager = new com.example.abakarmagomedov.shabimchat.managers.NotificationManager(getApplication());
 
         sound_sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (sound_sw.isChecked()) {
