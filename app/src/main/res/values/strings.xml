@@ -23,6 +23,12 @@
     <string name="vibro_notify_on">Вибрация включена</string>
     <string name="sound_notify_off">Звуковые уведомления отключены</string>
     <string name="vibro_notify_off">Вибрация отключена</string>
+    <string name="profile">Профиль</string>
+    <string name="name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="about_myself">О себе:</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="sign_out">Выйти</string>
 
     <string name="error">Error</string>
     <string name="enter_message">Enter message</string>

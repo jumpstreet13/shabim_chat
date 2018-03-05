@@ -71,7 +71,7 @@ public class NotificationManager {
         }
     }
 
-    private void setVariables() {
+    private void setVariables(){
         Bundle bundle = new Bundle();
 //        if (bundle.get("soundOn") == null)
 //            soundOn = false;
