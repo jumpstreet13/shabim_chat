@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".presentation.feature.login.LoginActivity"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>

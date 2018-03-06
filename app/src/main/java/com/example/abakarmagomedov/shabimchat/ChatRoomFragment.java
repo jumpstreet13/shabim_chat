@@ -17,8 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.abakarmagomedov.shabimchat.entity.AudioMessage;
-import com.example.abakarmagomedov.shabimchat.entity.Message;
+import com.example.abakarmagomedov.shabimchat.domain.entity.AudioMessage;
+import com.example.abakarmagomedov.shabimchat.domain.entity.Message;
 
 import java.io.File;
 import java.io.IOException;

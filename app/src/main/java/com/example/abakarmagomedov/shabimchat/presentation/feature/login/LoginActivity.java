@@ -1,17 +1,16 @@
-package com.example.abakarmagomedov.shabimchat;
+package com.example.abakarmagomedov.shabimchat.presentation.feature.login;
 
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.abakarmagomedov.shabimchat.R;
+import com.example.abakarmagomedov.shabimchat.RegistrationActivity;
 import com.example.abakarmagomedov.shabimchat.delegates.ErrorDialogDelegate;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;

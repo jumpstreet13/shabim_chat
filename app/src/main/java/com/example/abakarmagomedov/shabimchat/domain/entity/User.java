@@ -1,4 +1,4 @@
-package com.example.abakarmagomedov.shabimchat.entity;
+package com.example.abakarmagomedov.shabimchat.domain.entity;
 
 /**
  * Created by abakarmagomedov on 21/02/2018 at project ShabimChat.

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.abakarmagomedov.shabimchat.entity.ChatEntity;
+import com.example.abakarmagomedov.shabimchat.domain.entity.ChatEntity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.example.abakarmagomedov.shabimchat;
 
-import android.app.PendingIntent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.abakarmagomedov.shabimchat.entity.AudioMessage;
-import com.example.abakarmagomedov.shabimchat.entity.Message;
+import com.example.abakarmagomedov.shabimchat.domain.entity.AudioMessage;
+import com.example.abakarmagomedov.shabimchat.domain.entity.Message;
 
 import java.util.List;
 
