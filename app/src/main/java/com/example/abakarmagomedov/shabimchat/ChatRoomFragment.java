@@ -1,6 +1,7 @@
 package com.example.abakarmagomedov.shabimchat;
 
 
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,8 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.abakarmagomedov.shabimchat.entity.Message;
+import com.example.abakarmagomedov.shabimchat.domain.entity.AudioMessage;
+import com.example.abakarmagomedov.shabimchat.domain.entity.Message;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +28,19 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatRoomFragment extends Fragment {
+public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMusicClickedListener {
 
     public static final String CHAT_ROOM_ID = "chat_room_id";
     private int chatId;
     private RecyclerView chatRecyclerView;
     private Button sendMessageButton;
-    private List<Message> messages;
+    private List<ChatEntityMarker> messages;
     private EditText messageEditText;
     private MessageAdapter messageAdapter;
     private ImageView record;
     private MediaRecorder mRecorder = null;
+    private MediaPlayer mPlayer = null;
+    private boolean isRecording;
 
     public ChatRoomFragment() {
         // Required empty public constructor
@@ -67,7 +72,7 @@ public class ChatRoomFragment extends Fragment {
         messageEditText = view.findViewById(R.id.edittext_chatbox);
         messages = new ArrayList<>();
         messages.add(new Message("Hello my friend", System.currentTimeMillis()));
-        messageAdapter = new MessageAdapter(messages);
+        messageAdapter = new MessageAdapter(messages, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
         chatRecyclerView.setLayoutManager(layoutManager);
@@ -83,31 +88,67 @@ public class ChatRoomFragment extends Fragment {
         });
 
         record.setOnClickListener(v -> {
-            startRecording();
+            if (!isRecording) {
+                startRecording();
+                isRecording = true;
+            } else {
+                stopRecording();
+                isRecording = false;
+            }
         });
         return view;
     }
+
+    private File file;
 
     private void startRecording() {
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile("userRecord");
+        file = new File(getContext().getFilesDir(), "userRecord");
+        mRecorder.setOutputFile(file.getPath());
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
             mRecorder.prepare();
+            mRecorder.start();
+            Log.d("RECORD", "STARTED");
         } catch (IOException e) {
-            Log.e("EXCEPTION", "prepare() failed");
+            e.printStackTrace();
         }
-
-        mRecorder.start();
     }
 
     private void stopRecording() {
+        AudioMessage audioMessage = new AudioMessage();
+        audioMessage.setCreatedAt(System.currentTimeMillis());
+        audioMessage.setSender(true);
+        audioMessage.setPathToFile(file.getPath());
+        messages.add(0, audioMessage);
+        messageAdapter.notifyDataSetChanged();
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
+        Log.d("RECORD", "STOPPED");
     }
 
+    @Override
+    public void onMusicPlay(String pathToAudio) {
+        startPlaying();
+    }
+
+    private void startPlaying() {
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(file.getPath());
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e("FAIL", "prepare() failed");
+        }
+    }
+
+    private void stopPlaying() {
+        mPlayer.release();
+        mPlayer = null;
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.abakarmagomedov.shabimchat;
+package com.example.abakarmagomedov.shabimchat.presentation.feature.login;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.abakarmagomedov.shabimchat.managers.NotificationManager;
+import com.example.abakarmagomedov.shabimchat.R;
+import com.example.abakarmagomedov.shabimchat.RegistrationActivity;
 import com.example.abakarmagomedov.shabimchat.delegates.ErrorDialogDelegate;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -46,15 +47,8 @@ public class LoginActivity extends AppCompatActivity {
             //startActivity(intent);
         });
         registrationTextView.setOnClickListener(v -> {
-
-            //для тесту
-            NotificationManager notificationManager = new NotificationManager(getApplication());
-            notificationManager.showNotify(1,"Опа", "Здарова");
-            //для тесту
-
-            Intent intent = new Intent(LoginActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
             startActivity(intent);
-
         });
         logoView = findViewById(R.id.logo_view);
         processor = new CombinePostProcessors.Builder()
@@ -73,17 +67,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showEmailDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setMessage(R.string.enter_email);
+        dialog.setMessage("Введите свой Email адрес: ");
 
         final EditText email_et = new EditText(this);
 
         dialog.setView(email_et);
-        dialog.setPositiveButton(R.string.ok, (dialog1, which) -> {
+        dialog.setPositiveButton("Oк", (dialog1, which) -> {
             email = email_et.getText().toString();
             dialog1.cancel();
         });
 
-        dialog.setNegativeButton(R.string.cancel, (dialog12, which) -> dialog12.cancel());
+        dialog.setNegativeButton("Отмена", (dialog12, which) -> dialog12.cancel());
         dialog.show();
     }
 
