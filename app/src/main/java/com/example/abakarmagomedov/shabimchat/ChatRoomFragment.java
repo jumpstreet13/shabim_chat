@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.abakarmagomedov.shabimchat.entity.AudioMessage;
 import com.example.abakarmagomedov.shabimchat.entity.Message;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatRoomFragment extends Fragment {
+public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMusicClickedListener {
 
     public static final String CHAT_ROOM_ID = "chat_room_id";
     private int chatId;
@@ -36,6 +37,7 @@ public class ChatRoomFragment extends Fragment {
     private MessageAdapter messageAdapter;
     private ImageView record;
     private MediaRecorder mRecorder = null;
+    private boolean isRecording;
 
     public ChatRoomFragment() {
         // Required empty public constructor
@@ -67,7 +69,7 @@ public class ChatRoomFragment extends Fragment {
         messageEditText = view.findViewById(R.id.edittext_chatbox);
         messages = new ArrayList<>();
         messages.add(new Message("Hello my friend", System.currentTimeMillis()));
-        messageAdapter = new MessageAdapter(messages);
+        messageAdapter = new MessageAdapter(messages, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
         chatRecyclerView.setLayoutManager(layoutManager);
@@ -83,7 +85,13 @@ public class ChatRoomFragment extends Fragment {
         });
 
         record.setOnClickListener(v -> {
-            startRecording();
+            if (!isRecording) {
+                startRecording();
+                isRecording = true;
+            } else {
+                stopRecording();
+                isRecording = false;
+            }
         });
         return view;
     }
@@ -105,9 +113,17 @@ public class ChatRoomFragment extends Fragment {
     }
 
     private void stopRecording() {
+        AudioMessage audioMessage = new AudioMessage();
+        audioMessage.setCreatedAt(System.currentTimeMillis());
+        audioMessage.setSender(true);
+        messages.add(audioMessage);
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
     }
 
+    @Override
+    public void onMusicPlay(String pathToAudio) {
+
+    }
 }
