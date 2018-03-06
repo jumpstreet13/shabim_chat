@@ -1,6 +1,7 @@
 package com.example.abakarmagomedov.shabimchat;
 
 
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import com.example.abakarmagomedov.shabimchat.entity.AudioMessage;
 import com.example.abakarmagomedov.shabimchat.entity.Message;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMus
     private MessageAdapter messageAdapter;
     private ImageView record;
     private MediaRecorder mRecorder = null;
+    private MediaPlayer mPlayer = null;
     private boolean isRecording;
 
     public ChatRoomFragment() {
@@ -96,34 +99,56 @@ public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMus
         return view;
     }
 
+    private File file;
+
     private void startRecording() {
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile("userRecord");
+        file = new File(getContext().getFilesDir(), "userRecord");
+        mRecorder.setOutputFile(file.getPath());
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
             mRecorder.prepare();
+            mRecorder.start();
+            Log.d("RECORD", "STARTED");
         } catch (IOException e) {
-            Log.e("EXCEPTION", "prepare() failed");
+            e.printStackTrace();
         }
-
-        mRecorder.start();
     }
 
     private void stopRecording() {
         AudioMessage audioMessage = new AudioMessage();
         audioMessage.setCreatedAt(System.currentTimeMillis());
         audioMessage.setSender(true);
-        messages.add(audioMessage);
+        audioMessage.setPathToFile(file.getPath());
+        messages.add(0, audioMessage);
+        messageAdapter.notifyDataSetChanged();
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
+        Log.d("RECORD", "STOPPED");
     }
 
     @Override
     public void onMusicPlay(String pathToAudio) {
+        startPlaying();
+    }
 
+    private void startPlaying() {
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(file.getPath());
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e("FAIL", "prepare() failed");
+        }
+    }
+
+    private void stopPlaying() {
+        mPlayer.release();
+        mPlayer = null;
     }
 }

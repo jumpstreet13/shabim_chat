@@ -50,7 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             case VIEW_TYPE_AUDIO_MESSAGE_SENT:
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.sent_audio_message_item, parent, false);
-                return new SentMessageHolder(view);
+                return new SentAudioMessageHolder(view);
             default:
                 return null;
         }
@@ -58,37 +58,32 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (messages instanceof Message) {
-            Message message = (Message) messages.get(position);
+        ChatEntityMarker message = messages.get(position);
 
-            switch (holder.getItemViewType()) {
-                case VIEW_TYPE_MESSAGE_RECEIVED:
-                    ((ReceiveMessageHolder) holder).bind(message);
-                    break;
-                case VIEW_TYPE_MESSAGE_SENT:
-                    ((SentMessageHolder) holder).bind(message);
-                    break;
-            }
-        }
-        if (messages instanceof AudioMessage) {
-            AudioMessage message = (AudioMessage) messages.get(position);
-
-            switch (holder.getItemViewType()) {
-                case VIEW_TYPE_MESSAGE_RECEIVED:
-                    // ((ReceiveMessageHolder) holder).bind(message);
-                    break;
-                case VIEW_TYPE_MESSAGE_SENT:
-                    ((SentAudioMessageHolder) holder).bind(message, listener);
-                    break;
-            }
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_MESSAGE_RECEIVED:
+                ((ReceiveMessageHolder) holder).bind((Message) message);
+                break;
+            case VIEW_TYPE_MESSAGE_SENT:
+                ((SentMessageHolder) holder).bind((Message) message);
+                break;
+            case VIEW_TYPE_AUDIO_MESSAGE_SENT:
+                ((SentAudioMessageHolder) holder).bind((AudioMessage) message, listener);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
         ChatEntityMarker message = messages.get(position);
-        if (message.isFromSender()) return VIEW_TYPE_MESSAGE_SENT;
-        else return VIEW_TYPE_MESSAGE_RECEIVED;
+        if (message instanceof Message) {
+            if (message.isFromSender()) return VIEW_TYPE_MESSAGE_SENT;
+            else return VIEW_TYPE_MESSAGE_RECEIVED;
+        }
+        if (message instanceof AudioMessage) {
+            if (message.isFromSender()) return VIEW_TYPE_AUDIO_MESSAGE_SENT;
+            else return -5;
+        }
+        throw new IllegalStateException("Undefined viewtype");
     }
 
     @Override
@@ -132,6 +127,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static class SentAudioMessageHolder extends RecyclerView.ViewHolder {
 
         private ImageView playMusic;
+        private boolean isPlayed;
 
         public SentAudioMessageHolder(View itemView) {
             super(itemView);
@@ -139,7 +135,16 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
 
         void bind(AudioMessage message, PlayMusicClickedListener clickedListener) {
-            playMusic.setOnClickListener(v -> clickedListener.onMusicPlay(message.getPathToFile()));
+            playMusic.setOnClickListener(v -> {
+                if (!isPlayed) {
+                    clickedListener.onMusicPlay(message.getPathToFile());
+                    playMusic.setImageResource(R.drawable.ic_pause);
+                    isPlayed = true;
+                } else {
+                    playMusic.setImageResource(R.drawable.ic_play_arrow);
+                    isPlayed = false;
+                }
+            });
         }
     }
 }
