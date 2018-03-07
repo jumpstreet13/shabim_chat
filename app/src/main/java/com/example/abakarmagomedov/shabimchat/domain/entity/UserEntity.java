@@ -4,7 +4,7 @@ package com.example.abakarmagomedov.shabimchat.domain.entity;
  * Created by abakarmagomedov on 21/02/2018 at project ShabimChat.
  */
 
-public class User {
+public class UserEntity {
 
     private String nickname;
 

@@ -1,4 +1,4 @@
-package com.example.abakarmagomedov.shabimchat;
+package com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,8 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.abakarmagomedov.shabimchat.domain.entity.AudioMessage;
-import com.example.abakarmagomedov.shabimchat.domain.entity.Message;
+import com.example.abakarmagomedov.shabimchat.domain.entity.ChatEntityMarker;
+import com.example.abakarmagomedov.shabimchat.R;
+import com.example.abakarmagomedov.shabimchat.TimeUtils;
+import com.example.abakarmagomedov.shabimchat.domain.entity.AudioMessageEntity;
+import com.example.abakarmagomedov.shabimchat.domain.entity.MessageEntity;
 
 import java.util.List;
 
@@ -61,24 +64,24 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_RECEIVED:
-                ((ReceiveMessageHolder) holder).bind((Message) message);
+                ((ReceiveMessageHolder) holder).bind((MessageEntity) message);
                 break;
             case VIEW_TYPE_MESSAGE_SENT:
-                ((SentMessageHolder) holder).bind((Message) message);
+                ((SentMessageHolder) holder).bind((MessageEntity) message);
                 break;
             case VIEW_TYPE_AUDIO_MESSAGE_SENT:
-                ((SentAudioMessageHolder) holder).bind((AudioMessage) message, listener);
+                ((SentAudioMessageHolder) holder).bind((AudioMessageEntity) message, listener);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
         ChatEntityMarker message = messages.get(position);
-        if (message instanceof Message) {
+        if (message instanceof MessageEntity) {
             if (message.isFromSender()) return VIEW_TYPE_MESSAGE_SENT;
             else return VIEW_TYPE_MESSAGE_RECEIVED;
         }
-        if (message instanceof AudioMessage) {
+        if (message instanceof AudioMessageEntity) {
             if (message.isFromSender()) return VIEW_TYPE_AUDIO_MESSAGE_SENT;
             else return -5;
         }
@@ -101,7 +104,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             receivedMessageTime = itemView.findViewById(R.id.received_message_time);
         }
 
-        void bind(Message message) {
+        void bind(MessageEntity message) {
             receivedMessage.setText(message.getMessage());
             receivedMessageTime.setText(TimeUtils.formatDateFromLong(message.getCreatedAt()));
         }
@@ -117,7 +120,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             sentMessageTime = itemView.findViewById(R.id.sent_message_time);
         }
 
-        void bind(Message message) {
+        void bind(MessageEntity message) {
             sentMessage.setText(message.getMessage());
             sentMessageTime.setText(TimeUtils.formatDateFromLong(message.getCreatedAt()));
         }
@@ -133,7 +136,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             playMusic = itemView.findViewById(R.id.playMusic);
         }
 
-        void bind(AudioMessage message, PlayMusicClickedListener clickedListener) {
+        void bind(AudioMessageEntity message, PlayMusicClickedListener clickedListener) {
             playMusic.setOnClickListener(v -> {
                 if (!isPlayed) {
                     clickedListener.onMusicPlay(message.getPathToFile());

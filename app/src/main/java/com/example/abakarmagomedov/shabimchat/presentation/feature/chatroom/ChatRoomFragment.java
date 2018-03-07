@@ -1,4 +1,4 @@
-package com.example.abakarmagomedov.shabimchat;
+package com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom;
 
 
 import android.media.MediaPlayer;
@@ -17,41 +17,60 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.abakarmagomedov.shabimchat.domain.entity.AudioMessage;
-import com.example.abakarmagomedov.shabimchat.domain.entity.Message;
+import com.example.abakarmagomedov.shabimchat.domain.entity.ChatEntityMarker;
+import com.example.abakarmagomedov.shabimchat.presentation.base.BaseMvpFragment;
+import com.example.abakarmagomedov.shabimchat.presentation.base.CanShowError;
+import com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom.adapter.MessageAdapter;
+import com.example.abakarmagomedov.shabimchat.R;
+import com.example.abakarmagomedov.shabimchat.domain.entity.AudioMessageEntity;
+import com.example.abakarmagomedov.shabimchat.domain.entity.MessageEntity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMusicClickedListener {
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPresenter> implements ChatRoomView, CanShowError,
+        MessageAdapter.PlayMusicClickedListener {
 
     public static final String CHAT_ROOM_ID = "chat_room_id";
     private int chatId;
-    private RecyclerView chatRecyclerView;
-    private Button sendMessageButton;
+    private File file;
+    @BindView(R.id.recyclerview_message_list) RecyclerView chatRecyclerView;
+    @BindView(R.id.button_chatbox_send) Button sendMessageButton;
+    @BindView(R.id.record) ImageView record;
+    @BindView(R.id.edittext_chatbox) EditText messageEditText;
+
+    @OnClick(R.id.button_chatbox_send)
+    void onSendButtonClicked() {
+        MessageEntity message = new MessageEntity();
+        message.setMessage(messageEditText.getText().toString().trim());
+        message.setCreatedAt(System.currentTimeMillis());
+        message.setSender(true);
+        messages.add(0, message);
+        messageAdapter.notifyDataSetChanged();
+        messageEditText.setText("");
+    }
+
     private List<ChatEntityMarker> messages;
-    private EditText messageEditText;
     private MessageAdapter messageAdapter;
-    private ImageView record;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
     private boolean isRecording;
 
     public ChatRoomFragment() {
-        // Required empty public constructor
+
     }
 
-    // TODO: Rename and change types and number of parameters
     public static ChatRoomFragment newInstance(int chatRoomId) {
         ChatRoomFragment fragment = new ChatRoomFragment();
         Bundle args = new Bundle();
         args.putInt(CHAT_ROOM_ID, chatRoomId);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,30 +82,46 @@ public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMus
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chat_room, container, false);
-        chatRecyclerView = view.findViewById(R.id.recyclerview_message_list);
-        sendMessageButton = view.findViewById(R.id.button_chatbox_send);
-        record = view.findViewById(R.id.record);
-        messageEditText = view.findViewById(R.id.edittext_chatbox);
+    public void loadedMessages(@NotNull List<? extends MessageEntity> messages) {
+        this.messages.clear();
+        this.messages.addAll(messages);
+    }
+
+    @Override
+    public void showError(@NotNull String error) {
+        errorDialogDelegate.showError(error);
+    }
+
+    @Override
+    public void onMusicPlay(String pathToAudio) {
+        startPlaying();
+    }
+
+    private void startPlaying() {
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(file.getPath());
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e("FAIL", "prepare() failed");
+        }
+    }
+
+    @Override
+    protected int layoutRes() {
+        return R.layout.fragment_chat_room;
+    }
+
+    @Override
+    protected void initUi() {
         messages = new ArrayList<>();
-        messages.add(new Message("Hello my friend", System.currentTimeMillis()));
+        messages.add(new MessageEntity("Hello my friend", System.currentTimeMillis()));
         messageAdapter = new MessageAdapter(messages, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
         chatRecyclerView.setLayoutManager(layoutManager);
         chatRecyclerView.setAdapter(messageAdapter);
-        sendMessageButton.setOnClickListener(v -> {
-            Message message = new Message();
-            message.setMessage(messageEditText.getText().toString().trim());
-            message.setCreatedAt(System.currentTimeMillis());
-            message.setSender(true);
-            messages.add(0, message);
-            messageAdapter.notifyDataSetChanged();
-            messageEditText.setText("");
-        });
-
         record.setOnClickListener(v -> {
             if (!isRecording) {
                 startRecording();
@@ -96,10 +131,8 @@ public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMus
                 isRecording = false;
             }
         });
-        return view;
+        presenter.getAllMessages(chatId);
     }
-
-    private File file;
 
     private void startRecording() {
         mRecorder = new MediaRecorder();
@@ -119,7 +152,7 @@ public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMus
     }
 
     private void stopRecording() {
-        AudioMessage audioMessage = new AudioMessage();
+        AudioMessageEntity audioMessage = new AudioMessageEntity();
         audioMessage.setCreatedAt(System.currentTimeMillis());
         audioMessage.setSender(true);
         audioMessage.setPathToFile(file.getPath());
@@ -131,24 +164,9 @@ public class ChatRoomFragment extends Fragment implements MessageAdapter.PlayMus
         Log.d("RECORD", "STOPPED");
     }
 
-    @Override
-    public void onMusicPlay(String pathToAudio) {
-        startPlaying();
-    }
-
-    private void startPlaying() {
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(file.getPath());
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            Log.e("FAIL", "prepare() failed");
-        }
-    }
-
     private void stopPlaying() {
         mPlayer.release();
         mPlayer = null;
     }
+
 }

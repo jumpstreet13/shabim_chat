@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.abakarmagomedov.shabimchat.domain.entity.ChatEntity;
+import com.example.abakarmagomedov.shabimchat.domain.entity.ChatRoomEntity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -26,10 +26,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
     }
 
     private ChatClickListener chatClickListener;
-    private List<ChatEntity> chats;
+    private List<ChatRoomEntity> chats;
 
 
-    public ChatAdapter(List<ChatEntity> chats, ChatClickListener chatClickListener) {
+    public ChatAdapter(List<ChatRoomEntity> chats, ChatClickListener chatClickListener) {
         this.chats = chats;
         this.chatClickListener = chatClickListener;
     }
@@ -43,7 +43,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
     @Override
     public void onBindViewHolder(ChatHolder holder, int position) {
-        ChatEntity chatEntity = chats.get(position);
+        ChatRoomEntity chatEntity = chats.get(position);
         holder.bindView(chatEntity, chatClickListener);
     }
 
@@ -68,7 +68,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             chatBox = itemView.findViewById(R.id.chat_box);
         }
 
-        void bindView(ChatEntity chatEntity, final ChatClickListener listener) {
+        void bindView(ChatRoomEntity chatEntity, final ChatClickListener listener) {
             recipientName.setText(chatEntity.getRecepientName());
             messageText.setText(chatEntity.getMessageText());
             messageTime.setText("21.16");

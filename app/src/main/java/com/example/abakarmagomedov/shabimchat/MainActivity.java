@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom.ChatRoomFragment;
+
 public class MainActivity extends AppCompatActivity implements ChatFragment.ChatClickedListener {
 
     private DrawerLayout mDrawerLayout;

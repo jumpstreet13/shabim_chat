@@ -13,7 +13,7 @@ import javax.inject.Inject;
 public class ToolbarTitleDelegate {
 
     private final ToolbarTitleManager manager;
-    
+
     public ToolbarTitleDelegate(Activity activity) {
         if (activity instanceof ToolbarTitleManager) {
             this.manager = (ToolbarTitleManager) activity;

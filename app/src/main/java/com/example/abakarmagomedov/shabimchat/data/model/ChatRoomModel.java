@@ -1,29 +1,36 @@
-package com.example.abakarmagomedov.shabimchat.domain.entity;
+package com.example.abakarmagomedov.shabimchat.data.model;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by abakarmagomedov on 18/02/2018 at project ShabimChat.
+ * Created by abakarmagomedov on 07/03/2018 at project ShabimChat.
  */
 
-public class ChatEntity {
+public class ChatRoomModel extends RealmObject {
 
-    private int id;
+    @PrimaryKey
+    private long id;
+
     private String recepientName;
     private String messageText;
     private Long messageTime;
     private String senderAvatar;
     private String recepientAvatar;
+    private RealmList<MessageModel> messages;
 
-    public ChatEntity(String recepientName, String messageText, Long messageTime) {
+    public ChatRoomModel(String recepientName, String messageText, Long messageTime) {
         this.recepientName = recepientName;
         this.messageText = messageText;
         this.messageTime = messageTime;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -65,5 +72,13 @@ public class ChatEntity {
 
     public void setRecepientAvatar(String recepientAvatar) {
         this.recepientAvatar = recepientAvatar;
+    }
+
+    public RealmList<MessageModel> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(RealmList<MessageModel> messages) {
+        this.messages = messages;
     }
 }

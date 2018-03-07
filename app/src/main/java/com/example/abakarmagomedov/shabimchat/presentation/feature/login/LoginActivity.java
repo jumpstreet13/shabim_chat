@@ -3,7 +3,6 @@ package com.example.abakarmagomedov.shabimchat.presentation.feature.login;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,15 +11,13 @@ import android.widget.TextView;
 import com.example.abakarmagomedov.shabimchat.SettingsActivity;
 import com.example.abakarmagomedov.shabimchat.managers.NotificationManager;
 import com.example.abakarmagomedov.shabimchat.R;
-import com.example.abakarmagomedov.shabimchat.RegistrationActivity;
 import com.example.abakarmagomedov.shabimchat.delegates.ErrorDialogDelegate;
+import com.example.abakarmagomedov.shabimchat.presentation.base.BaseMvpActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-
-import org.w3c.dom.Text;
 
 import javax.inject.Inject;
 
@@ -31,7 +28,7 @@ import jp.wasabeef.fresco.processors.BlurPostprocessor;
 import jp.wasabeef.fresco.processors.CombinePostProcessors;
 import jp.wasabeef.fresco.processors.GrayscalePostprocessor;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseMvpActivity<LoginView, LoginPresenter> implements LoginView {
 
     @Inject ErrorDialogDelegate errorDialogDelegate;
     @BindView(R.id.login_button) Button loginButton;
@@ -62,9 +59,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    public int layoutRes() {
+        return R.layout.activity_login;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         CombinePostProcessors processor = new CombinePostProcessors.Builder()
                 .add(new BlurPostprocessor(this))
@@ -95,6 +96,4 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setNegativeButton(R.string.cancel, (dialog12, which) -> dialog12.cancel());
         dialog.show();
     }
-
-
 }

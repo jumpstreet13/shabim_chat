@@ -36,7 +36,7 @@ abstract class ToolbarActivity<V : MvpView, P : MvpPresenter<V>> : BaseMvpActivi
         supportFragmentManager.addOnBackStackChangedListener {
             if (supportFragmentManager.backStackEntryCount > 0) {
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                toolbar.setNavigationOnClickListener { v -> onBackPressed() }
+                toolbar.setNavigationOnClickListener { onBackPressed() }
             } else {
                 supportActionBar?.setDisplayHomeAsUpEnabled(false)
             }

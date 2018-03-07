@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.abakarmagomedov.shabimchat.domain.entity.ChatEntity;
+import com.example.abakarmagomedov.shabimchat.domain.entity.ChatRoomEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class ChatFragment extends Fragment implements ChatAdapter.ChatClickListe
 
     private RecyclerView recyclerView;
     private ChatAdapter chatAdapter;
-    private List<ChatEntity> chats;
+    private List<ChatRoomEntity> chats;
     private ChatClickedListener listener;
 
     public interface ChatClickedListener {
@@ -34,10 +34,6 @@ public class ChatFragment extends Fragment implements ChatAdapter.ChatClickListe
     // TODO: Rename and change types and number of parameters
     public static ChatFragment newInstance() {
         ChatFragment fragment = new ChatFragment();
-        //Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
-        //fragment.setArguments(args);
         return fragment;
     }
 
@@ -61,10 +57,10 @@ public class ChatFragment extends Fragment implements ChatAdapter.ChatClickListe
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         recyclerView = view.findViewById(R.id.chats_recycler_view);
         chats = new ArrayList<>();
-        ChatEntity chatEntity = new ChatEntity("Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatEntity chatEntity2 = new ChatEntity("Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatEntity chatEntity3 = new ChatEntity("Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatEntity chatEntity4 = new ChatEntity("Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomEntity chatEntity = new ChatRoomEntity("Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomEntity chatEntity2 = new ChatRoomEntity("Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomEntity chatEntity3 = new ChatRoomEntity("Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomEntity chatEntity4 = new ChatRoomEntity("Abakar Magomedov", "Hi Abakar", 24325435L);
         chats.add(chatEntity);
         chats.add(chatEntity2);
         chats.add(chatEntity3);

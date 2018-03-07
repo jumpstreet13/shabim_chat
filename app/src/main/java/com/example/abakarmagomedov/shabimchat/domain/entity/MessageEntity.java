@@ -1,30 +1,37 @@
 package com.example.abakarmagomedov.shabimchat.domain.entity;
 
-import com.example.abakarmagomedov.shabimchat.ChatEntityMarker;
-
 /**
- * Created by abakarmagomedov on 05/03/2018 at project ShabimChat.
+ * Created by abakarmagomedov on 21/02/2018 at project ShabimChat.
  */
 
-public class AudioMessage implements ChatEntityMarker {
-    private String pathToFile;
-    private User sender;
+public class MessageEntity implements ChatEntityMarker {
+
+    private String message;
+    private UserEntity sender;
     private long createdAt;
     private boolean isSender;
 
-    public String getPathToFile() {
-        return pathToFile;
+    public MessageEntity() {
     }
 
-    public void setPathToFile(String pathToFile) {
-        this.pathToFile = pathToFile;
+    public MessageEntity(String message, long createdAt) {
+        this.message = message;
+        this.createdAt = createdAt;
     }
 
-    public User getSender() {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public UserEntity getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(UserEntity sender) {
         this.sender = sender;
     }
 

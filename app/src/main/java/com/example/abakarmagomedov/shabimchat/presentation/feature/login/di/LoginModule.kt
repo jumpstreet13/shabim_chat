@@ -3,6 +3,9 @@ package com.example.abakarmagomedov.shabimchat.presentation.feature.login.di
 import android.app.Activity
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
+import com.example.abakarmagomedov.shabimchat.delegates.ErrorDialogDelegate
+import com.example.abakarmagomedov.shabimchat.di.scope.PerActivity
+import com.example.abakarmagomedov.shabimchat.presentation.feature.login.LoginActivity
 import dagger.Module
 import dagger.Provides
 
@@ -14,7 +17,14 @@ import dagger.Provides
 class LoginModule {
 
     @Provides
-    fun provideFragmentManager(activity: AppCompatActivity): FragmentManager {
+    @PerActivity
+    fun provideFragmentManager(activity: LoginActivity): FragmentManager {
         return activity.supportFragmentManager;
+    }
+
+    @Provides
+    @PerActivity
+    fun provideErrorDialogDelegate(activity: LoginActivity): ErrorDialogDelegate {
+        return ErrorDialogDelegate(activity.supportFragmentManager)
     }
 }
