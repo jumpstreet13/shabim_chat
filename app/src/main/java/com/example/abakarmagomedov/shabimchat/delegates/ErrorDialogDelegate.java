@@ -15,7 +15,6 @@ public class ErrorDialogDelegate {
 
     private final FragmentManager fragmentManager;
 
-    @Inject
     public ErrorDialogDelegate(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
     }

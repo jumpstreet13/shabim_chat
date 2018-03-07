@@ -26,7 +26,7 @@ ext {
     daggerVersion = '2.11'
     retrofitVersion = '2.3.0'
     loggingInterceptorVersion = '3.8.0'
-    mosbyVersion = '3.0.2'
+    mosbyVersion = '3.0.4'
 }
 
 task clean(type: Delete) {
