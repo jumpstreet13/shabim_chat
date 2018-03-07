@@ -116,7 +116,7 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
     @Override
     protected void initUi() {
         messages = new ArrayList<>();
-        messages.add(new MessageEntity("Hello my friend", System.currentTimeMillis()));
+        messages.add(new MessageEntity("Hello my friend", System.currentTimeMillis(), System.currentTimeMillis()));
         messageAdapter = new MessageAdapter(messages, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);

@@ -20,7 +20,11 @@ public class ChatRoomModel extends RealmObject {
     private String recepientAvatar;
     private RealmList<MessageModel> messages;
 
-    public ChatRoomModel(String recepientName, String messageText, Long messageTime) {
+    public ChatRoomModel() {
+    }
+
+    public ChatRoomModel(long id, String recepientName, String messageText, Long messageTime) {
+        this.id = id;
         this.recepientName = recepientName;
         this.messageText = messageText;
         this.messageTime = messageTime;

@@ -6,24 +6,25 @@ package com.example.abakarmagomedov.shabimchat.domain.entity;
 
 public class ChatRoomEntity {
 
-    private int id;
+    private long id;
     private String recepientName;
     private String messageText;
     private Long messageTime;
     private String senderAvatar;
     private String recepientAvatar;
 
-    public ChatRoomEntity(String recepientName, String messageText, Long messageTime) {
+    public ChatRoomEntity(long id, String recepientName, String messageText, Long messageTime) {
+        this.id = id;
         this.recepientName = recepientName;
         this.messageText = messageText;
         this.messageTime = messageTime;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

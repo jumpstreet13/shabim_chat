@@ -6,7 +6,9 @@ package com.example.abakarmagomedov.shabimchat.domain.entity;
 
 public class MessageEntity implements ChatEntityMarker {
 
+    private long id;
     private String message;
+    private long chatId;
     private UserEntity sender;
     private long createdAt;
     private boolean isSender;
@@ -14,9 +16,35 @@ public class MessageEntity implements ChatEntityMarker {
     public MessageEntity() {
     }
 
-    public MessageEntity(String message, long createdAt) {
+    public MessageEntity(long id, String message, long chatId, UserEntity sender, long createdAt, boolean isSender) {
+        this.id = id;
+        this.message = message;
+        this.chatId = chatId;
+        this.sender = sender;
+        this.createdAt = createdAt;
+        this.isSender = isSender;
+    }
+
+    public MessageEntity(String message, long createdAt, long chatId) {
         this.message = message;
         this.createdAt = createdAt;
+        this.chatId = chatId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
     }
 
     public String getMessage() {

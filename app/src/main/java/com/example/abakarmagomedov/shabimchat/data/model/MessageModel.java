@@ -13,28 +13,55 @@ public class MessageModel extends RealmObject {
 
     @PrimaryKey
     private long id;
-
     private long chatId;
-    private String pathToFile;
-    private UserEntity sender;
+    private String message;
+    //private UserEntity sender;
     private long createdAt;
     private boolean isSender;
 
-    public String getPathToFile() {
-        return pathToFile;
+    public MessageModel() {
     }
 
-    public void setPathToFile(String pathToFile) {
-        this.pathToFile = pathToFile;
+    public MessageModel(long id, long chatId, String message, long createdAt, boolean isSender) {
+        this.id = id;
+        this.chatId = chatId;
+        this.message = message;
+       // this.sender = sender;
+        this.createdAt = createdAt;
+        this.isSender = isSender;
     }
 
-    public UserEntity getSender() {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+  /*  public UserEntity getSender() {
         return sender;
     }
 
     public void setSender(UserEntity sender) {
         this.sender = sender;
-    }
+    }*/
 
     public long getCreatedAt() {
         return createdAt;
