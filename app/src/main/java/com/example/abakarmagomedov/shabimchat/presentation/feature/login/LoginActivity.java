@@ -20,47 +20,53 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import org.w3c.dom.Text;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.fresco.processors.BlurPostprocessor;
 import jp.wasabeef.fresco.processors.CombinePostProcessors;
 import jp.wasabeef.fresco.processors.GrayscalePostprocessor;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button loginButton;
-    private SimpleDraweeView logoView;
-    private CombinePostProcessors processor;
-    private TextView registrationTextView;
-    private TextView forgotPass;
+    @Inject ErrorDialogDelegate errorDialogDelegate;
+    @BindView(R.id.login_button) Button loginButton;
+    @BindView(R.id.logo_view) SimpleDraweeView logoView;
+    @BindView(R.id.registration_textview) TextView registrationTextView;
+    @BindView(R.id.forgot_pass_tv) TextView forgotPass;
     private String email;
-    private ErrorDialogDelegate errorDialogDelegate;
+
+    @OnClick(R.id.login_button)
+    void onLoginClicked() {
+        errorDialogDelegate.showError("Oh i'm fucking coming");
+    }
+
+    @OnClick(R.id.forgot_pass_tv)
+    void onForgotPassClicked() {
+        showEmailDialog();
+    }
+
+    @OnClick(R.id.registration_textview)
+    void onRegistrationClicked() {
+        //для тесту
+        NotificationManager notificationManager = new NotificationManager(getApplication());
+        notificationManager.showNotify(1, "Опа", "Здарова");
+        //для тесту
+
+        Intent intent = new Intent(LoginActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        forgotPass = findViewById(R.id.forgot_pass_tv);
-        forgotPass.setOnClickListener(v -> showEmailDialog());
-        loginButton = findViewById(R.id.login_button);
-        errorDialogDelegate = new ErrorDialogDelegate(getSupportFragmentManager());
-        registrationTextView = findViewById(R.id.registration_textview);
-        loginButton.setOnClickListener(v -> {
-            errorDialogDelegate.showError("Oh i'm fucking coming");
-            //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            //startActivity(intent);
-        });
-        registrationTextView.setOnClickListener(v -> {
-
-            //для тесту
-            NotificationManager notificationManager = new NotificationManager(getApplication());
-            notificationManager.showNotify(1,"Опа", "Здарова");
-            //для тесту
-
-            Intent intent = new Intent(LoginActivity.this, SettingsActivity.class);
-            startActivity(intent);
-
-        });
-        logoView = findViewById(R.id.logo_view);
-        processor = new CombinePostProcessors.Builder()
+        ButterKnife.bind(this);
+        CombinePostProcessors processor = new CombinePostProcessors.Builder()
                 .add(new BlurPostprocessor(this))
                 .add(new GrayscalePostprocessor())
                 .build();
