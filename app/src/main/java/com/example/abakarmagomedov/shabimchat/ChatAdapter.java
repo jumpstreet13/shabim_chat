@@ -79,7 +79,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             ImageRequest imageRequestRecipient = ImageRequestBuilder.newBuilderWithSource(Uri.parse("https://blog.caranddriver.com/wp-content/uploads/2017/04/cars_3_characters-2-876x535.jpg")).build();
             recipientAvatar.setImageURI(imageRequestRecipient.getSourceUri());
 
-            chatBox.setOnClickListener(v -> listener.chatClicked(0));
+            chatBox.setOnClickListener(v -> listener.chatClicked((int) chatEntity.getId()));
 
         }
     }

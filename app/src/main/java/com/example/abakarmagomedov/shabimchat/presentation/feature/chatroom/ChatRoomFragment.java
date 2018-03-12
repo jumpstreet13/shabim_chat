@@ -39,7 +39,6 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
         MessageAdapter.PlayMusicClickedListener {
 
     public static final String CHAT_ROOM_ID = "chat_room_id";
-    private int chatId;
     private File file;
     @BindView(R.id.recyclerview_message_list) RecyclerView chatRecyclerView;
     @BindView(R.id.button_chatbox_send) Button sendMessageButton;
@@ -52,8 +51,8 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
         message.setMessage(messageEditText.getText().toString().trim());
         message.setCreatedAt(System.currentTimeMillis());
         message.setSender(true);
-        messages.add(0, message);
-        messageAdapter.notifyDataSetChanged();
+        message.setId(System.currentTimeMillis());
+        presenter.sendMessage(message, getArguments().getInt(CHAT_ROOM_ID, -5));
         messageEditText.setText("");
     }
 
@@ -78,13 +77,24 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chatId = getArguments().getInt(CHAT_ROOM_ID, -5);
     }
 
     @Override
     public void loadedMessages(@NotNull List<? extends MessageEntity> messages) {
         this.messages.clear();
-        this.messages.addAll(messages);
+        this.messages.addAll(0, messages);
+        messageAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void messageSentSuccessfully(MessageEntity messageEntity) {
+        messages.add(0, messageEntity);
+        messageAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void messageNotSent(@NotNull MessageEntity message) {
+
     }
 
     @Override
@@ -131,7 +141,7 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
                 isRecording = false;
             }
         });
-        presenter.getAllMessages(chatId);
+        presenter.getAllMessages(getArguments().getInt(CHAT_ROOM_ID, -5));
     }
 
     private void startRecording() {
@@ -168,5 +178,4 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
         mPlayer.release();
         mPlayer = null;
     }
-
 }

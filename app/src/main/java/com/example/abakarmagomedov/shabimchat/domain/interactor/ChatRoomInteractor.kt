@@ -1,8 +1,10 @@
 package com.example.abakarmagomedov.shabimchat.domain.interactor
 
+import com.example.abakarmagomedov.shabimchat.data.model.MessageModel
 import com.example.abakarmagomedov.shabimchat.domain.entity.MessageEntity
 import com.example.abakarmagomedov.shabimchat.domain.usecase.AddMessageUseCase
 import com.example.abakarmagomedov.shabimchat.domain.usecase.GetMessagesUseCase
+import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -13,6 +15,10 @@ class ChatRoomInteractor @Inject constructor(private val addMessageUseCase: AddM
 
     fun getAllMessagesForRoom(id: Int): Observable<List<MessageEntity>> {
         return getMessagesUseCase.getMessagesForChatRoom(id)
+    }
+
+    fun addNewMessage(messageModel: MessageModel, chatId: Int): Completable {
+        return addMessageUseCase.addMessage(messageModel, chatId)
     }
 
 }

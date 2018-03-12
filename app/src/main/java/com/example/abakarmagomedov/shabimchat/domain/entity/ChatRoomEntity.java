@@ -13,6 +13,9 @@ public class ChatRoomEntity {
     private String senderAvatar;
     private String recepientAvatar;
 
+    public ChatRoomEntity() {
+    }
+
     public ChatRoomEntity(long id, String recepientName, String messageText, Long messageTime) {
         this.id = id;
         this.recepientName = recepientName;

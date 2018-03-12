@@ -1,6 +1,8 @@
 package com.example.abakarmagomedov.shabimchat.domain.gateway
 
+import com.example.abakarmagomedov.shabimchat.data.model.MessageModel
 import com.example.abakarmagomedov.shabimchat.domain.entity.MessageEntity
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 /**
@@ -8,4 +10,5 @@ import io.reactivex.Observable
  */
 interface ChatRoomGateway {
     fun getMessages(id: Int): Observable<List<MessageEntity>>
+    fun addMessage(messageModel: MessageModel, chatId: Int): Completable
 }

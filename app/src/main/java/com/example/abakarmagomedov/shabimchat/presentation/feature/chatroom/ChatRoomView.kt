@@ -8,5 +8,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpView
  * Created by abakarmagomedov on 07/03/2018 at project ShabimChat.
  */
 interface ChatRoomView : MvpView, CanShowError {
-    fun loadedMessages(messages: List<MessageEntity>);
+    fun loadedMessages(messages: List<MessageEntity>)
+    fun messageSentSuccessfully(message: MessageEntity)
+    fun messageNotSent(message: MessageEntity)
 }

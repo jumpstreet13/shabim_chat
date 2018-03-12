@@ -32,4 +32,16 @@ class MessageMapper @Inject constructor() {
         return messageModel
     }
 
+    fun map(from: List<MessageEntity>): List<MessageModel> {
+        val messages = ArrayList<MessageModel>()
+        from.mapTo(messages) { map(it) }
+        return messages
+    }
+
+    fun mapModel(from: List<MessageModel>): List<MessageEntity> {
+        val messages = ArrayList<MessageEntity>()
+        from.mapTo(messages) { map(it) }
+        return messages
+    }
+
 }
