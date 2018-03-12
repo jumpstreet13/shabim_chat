@@ -1,17 +1,27 @@
 package com.example.abakarmagomedov.shabimchat
 
+import android.app.Activity
+import android.app.Application
+import android.support.v4.app.Fragment
 import com.example.abakarmagomedov.shabimchat.di.DaggerAppComponent
 import com.facebook.drawee.backends.pipeline.Fresco
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
 
 /**
  * Created by abakarmagomedov on 06/03/2018 at project ShabimChat.
  */
-class App : DaggerApplication() {
+class App : DaggerApplication(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate() {
         super.onCreate()
@@ -24,5 +34,6 @@ class App : DaggerApplication() {
         Realm.setDefaultConfiguration(config)
     }
 
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.builder().create(this)
 }

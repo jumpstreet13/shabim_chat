@@ -1,4 +1,4 @@
-package com.example.abakarmagomedov.shabimchat;
+package com.example.abakarmagomedov.shabimchat.presentation.feature.main;
 
 
 import android.support.design.widget.NavigationView;
@@ -7,27 +7,34 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.abakarmagomedov.shabimchat.ChatFragment;
+import com.example.abakarmagomedov.shabimchat.R;
+import com.example.abakarmagomedov.shabimchat.presentation.base.BaseMvpActivity;
+import com.example.abakarmagomedov.shabimchat.presentation.base.ToolbarActivity;
 import com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom.ChatRoomFragment;
 
-public class MainActivity extends AppCompatActivity implements ChatFragment.ChatClickedListener {
+import butterknife.BindView;
+
+public class MainActivity extends ToolbarActivity<MainView, MainPresenter> implements ChatFragment.ChatClickedListener {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private DrawerLayout mDrawerLayout;
 
     @Override
+    public int layoutRes() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        setToolbar(toolbar);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

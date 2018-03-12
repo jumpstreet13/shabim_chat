@@ -18,7 +18,7 @@
         <activity
             android:name=".presentation.feature.login.LoginActivity"
             android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".presentation.feature.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

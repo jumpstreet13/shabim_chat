@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +15,16 @@ import com.example.abakarmagomedov.shabimchat.delegates.ToolbarTitleDelegate
 import com.hannesdorfmann.mosby3.mvp.MvpFragment
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
 /**
  * Created by abakarmagomedov on 07/03/2018 at project ShabimChat.
  */
-abstract class BaseMvpFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V, P>() {
+abstract class BaseMvpFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V, P>(), HasSupportFragmentInjector {
 
     @Inject
     protected lateinit var shabimPresenter: P
@@ -30,6 +34,9 @@ abstract class BaseMvpFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V
 
     @Inject
     protected lateinit var errorDialogDelegate: ErrorDialogDelegate
+
+    @Inject
+    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
     private lateinit var unbinder: Unbinder
 
@@ -64,5 +71,5 @@ abstract class BaseMvpFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V
     }
 
     override fun createPresenter(): P = shabimPresenter
-
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
 }

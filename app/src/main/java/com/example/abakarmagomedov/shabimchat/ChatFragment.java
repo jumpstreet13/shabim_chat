@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 
 import com.example.abakarmagomedov.shabimchat.data.model.ChatRoomModel;
 import com.example.abakarmagomedov.shabimchat.domain.entity.ChatRoomEntity;
+import com.example.abakarmagomedov.shabimchat.presentation.feature.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmObject;
 
 public class ChatFragment extends Fragment implements ChatAdapter.ChatClickListener {
 
@@ -61,14 +61,14 @@ public class ChatFragment extends Fragment implements ChatAdapter.ChatClickListe
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         recyclerView = view.findViewById(R.id.chats_recycler_view);
         chats = new ArrayList<>();
-        ChatRoomEntity chatEntity = new ChatRoomEntity(1, "Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatRoomEntity chatEntity2 = new ChatRoomEntity(2, "Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatRoomEntity chatEntity3 = new ChatRoomEntity(3, "Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatRoomEntity chatEntity4 = new ChatRoomEntity(4, "Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatRoomModel chatmodel = new ChatRoomModel(1, "Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatRoomModel chatmodel2 = new ChatRoomModel(2, "Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatRoomModel chatmodel3 = new ChatRoomModel(3, "Abakar Magomedov", "Hi Abakar", 24325435L);
-        ChatRoomModel chatmodel4 = new ChatRoomModel(4, "Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomEntity chatEntity = new ChatRoomEntity(0, "Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomEntity chatEntity2 = new ChatRoomEntity(1, "Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomEntity chatEntity3 = new ChatRoomEntity(2, "Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomEntity chatEntity4 = new ChatRoomEntity(3, "Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomModel chatmodel = new ChatRoomModel(0, "Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomModel chatmodel2 = new ChatRoomModel(1, "Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomModel chatmodel3 = new ChatRoomModel(2, "Abakar Magomedov", "Hi Abakar", 24325435L);
+        ChatRoomModel chatmodel4 = new ChatRoomModel(3, "Abakar Magomedov", "Hi Abakar", 24325435L);
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(realm1 -> {
             realm1.insertOrUpdate(chatmodel);
