@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.abakarmagomedov.shabimchat.TimeUtils;
 import com.example.abakarmagomedov.shabimchat.domain.entity.ChatEntityMarker;
 import com.example.abakarmagomedov.shabimchat.presentation.base.BaseMvpFragment;
 import com.example.abakarmagomedov.shabimchat.presentation.base.CanShowError;
@@ -35,11 +36,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPresenter> implements ChatRoomView, CanShowError,
-        MessageAdapter.PlayMusicClickedListener {
+public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPresenter> implements ChatRoomView, CanShowError {
 
     public static final String CHAT_ROOM_ID = "chat_room_id";
-    private File file;
     @BindView(R.id.recyclerview_message_list) RecyclerView chatRecyclerView;
     @BindView(R.id.button_chatbox_send) Button sendMessageButton;
     @BindView(R.id.record) ImageView record;
@@ -59,7 +58,6 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
     private List<ChatEntityMarker> messages;
     private MessageAdapter messageAdapter;
     private MediaRecorder mRecorder = null;
-    private MediaPlayer mPlayer = null;
     private boolean isRecording;
 
     public ChatRoomFragment() {
@@ -81,7 +79,7 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
 
     @Override
     public void loadedMessages(@NotNull List<? extends MessageEntity> messages) {
-        this.messages.clear();
+        // this.messages.clear();
         this.messages.addAll(0, messages);
         messageAdapter.notifyDataSetChanged();
     }
@@ -103,22 +101,6 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
     }
 
     @Override
-    public void onMusicPlay(String pathToAudio) {
-        startPlaying();
-    }
-
-    private void startPlaying() {
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(file.getPath());
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            Log.e("FAIL", "prepare() failed");
-        }
-    }
-
-    @Override
     protected int layoutRes() {
         return R.layout.fragment_chat_room;
     }
@@ -127,28 +109,32 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
     protected void initUi() {
         messages = new ArrayList<>();
         messages.add(new MessageEntity("Hello my friend", System.currentTimeMillis(), System.currentTimeMillis()));
-        messageAdapter = new MessageAdapter(messages, this);
+        messageAdapter = new MessageAdapter(messages);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
         chatRecyclerView.setLayoutManager(layoutManager);
         chatRecyclerView.setAdapter(messageAdapter);
         record.setOnClickListener(v -> {
+            File file = new File(getContext().getFilesDir(), String.valueOf(messages.size()));
             if (!isRecording) {
-                startRecording();
+                startRecording(file);
                 isRecording = true;
             } else {
-                stopRecording();
+                try {
+                    stopRecording(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 isRecording = false;
             }
         });
         presenter.getAllMessages(getArguments().getInt(CHAT_ROOM_ID, -5));
     }
 
-    private void startRecording() {
+    private void startRecording(File file) {
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        file = new File(getContext().getFilesDir(), "userRecord");
         mRecorder.setOutputFile(file.getPath());
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
@@ -161,21 +147,17 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
         }
     }
 
-    private void stopRecording() {
+    private void stopRecording(File file) throws IOException {
         AudioMessageEntity audioMessage = new AudioMessageEntity();
         audioMessage.setCreatedAt(System.currentTimeMillis());
         audioMessage.setSender(true);
         audioMessage.setPathToFile(file.getPath());
         messages.add(0, audioMessage);
         messageAdapter.notifyDataSetChanged();
+
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
         Log.d("RECORD", "STOPPED");
-    }
-
-    private void stopPlaying() {
-        mPlayer.release();
-        mPlayer = null;
     }
 }

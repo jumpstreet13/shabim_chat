@@ -1,6 +1,8 @@
 package com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom.adapter;
 
+import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.example.abakarmagomedov.shabimchat.TimeUtils;
 import com.example.abakarmagomedov.shabimchat.domain.entity.AudioMessageEntity;
 import com.example.abakarmagomedov.shabimchat.domain.entity.MessageEntity;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -24,17 +27,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
     private static final int VIEW_TYPE_AUDIO_MESSAGE_SENT = 3;
-    private PlayMusicClickedListener listener;
-
-    public interface PlayMusicClickedListener {
-        void onMusicPlay(String pathToAudio);
-    }
 
     private List<ChatEntityMarker> messages;
 
-    public MessageAdapter(List<ChatEntityMarker> messages, PlayMusicClickedListener listener) {
+    public MessageAdapter(List<ChatEntityMarker> messages) {
         this.messages = messages;
-        this.listener = listener;
     }
 
     @Override
@@ -70,7 +67,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 ((SentMessageHolder) holder).bind((MessageEntity) message);
                 break;
             case VIEW_TYPE_AUDIO_MESSAGE_SENT:
-                ((SentAudioMessageHolder) holder).bind((AudioMessageEntity) message, listener);
+                ((SentAudioMessageHolder) holder).bind((AudioMessageEntity) message);
         }
     }
 
@@ -129,24 +126,60 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static class SentAudioMessageHolder extends RecyclerView.ViewHolder {
 
         private ImageView playMusic;
+        private TextView timeText, lengthText;
         private boolean isPlayed;
+        private MediaPlayer mPlayer = null;
 
         public SentAudioMessageHolder(View itemView) {
             super(itemView);
             playMusic = itemView.findViewById(R.id.playMusic);
+            timeText = itemView.findViewById(R.id.sent_audio_time);
+            lengthText = itemView.findViewById(R.id.audio_length);
         }
 
-        void bind(AudioMessageEntity message, PlayMusicClickedListener clickedListener) {
+        void bind(AudioMessageEntity message) {
+            timeText.setText(TimeUtils.formatDateFromLong(message.getCreatedAt()));
+            lengthText.setText(TimeUtils.formatMillisToSeconds(getAudioDuration(message.getPathToFile())));
             playMusic.setOnClickListener(v -> {
                 if (!isPlayed) {
-                    clickedListener.onMusicPlay(message.getPathToFile());
-                    playMusic.setImageResource(R.drawable.ic_pause);
-                    isPlayed = true;
+                    startPlaying(message.getPathToFile());
                 } else {
-                    playMusic.setImageResource(R.drawable.ic_play_arrow);
-                    isPlayed = false;
+                    stopPlaying();
                 }
             });
+        }
+
+        private void startPlaying(String pathToFile) {
+            mPlayer = new MediaPlayer();
+            try {
+                mPlayer.setDataSource(pathToFile);
+                mPlayer.prepare();
+                mPlayer.start();
+                mPlayer.setOnCompletionListener(mp -> stopPlaying());
+                playMusic.setImageResource(R.drawable.ic_pause);
+                isPlayed = true;
+            } catch (IOException e) {
+                Log.e("FAIL", "prepare() failed");
+            }
+        }
+
+        private void stopPlaying() {
+            mPlayer.release();
+            mPlayer = null;
+            playMusic.setImageResource(R.drawable.ic_play_arrow);
+            isPlayed = false;
+        }
+
+        private int getAudioDuration(String pathToFile) {
+            mPlayer = new MediaPlayer();
+            try {
+                mPlayer.setDataSource(pathToFile);
+                mPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return -5;
+            }
+            return mPlayer.getDuration();
         }
     }
 }

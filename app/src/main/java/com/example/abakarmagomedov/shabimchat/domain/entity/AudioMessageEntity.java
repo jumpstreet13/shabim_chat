@@ -9,6 +9,7 @@ public class AudioMessageEntity implements ChatEntityMarker {
     private UserEntity sender;
     private long createdAt;
     private boolean isSender;
+    private String duration;
 
     public String getPathToFile() {
         return pathToFile;
@@ -40,6 +41,14 @@ public class AudioMessageEntity implements ChatEntityMarker {
 
     public void setSender(boolean sender) {
         isSender = sender;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     @Override
