@@ -1,13 +1,16 @@
 package com.example.abakarmagomedov.shabimchat.data.repository
 
 import android.os.Message
+import com.example.abakarmagomedov.shabimchat.data.mapper.ChatRoomMapper
 import com.example.abakarmagomedov.shabimchat.data.mapper.MessageMapper
 import com.example.abakarmagomedov.shabimchat.data.model.ChatRoomModel
 import com.example.abakarmagomedov.shabimchat.data.model.MessageModel
+import com.example.abakarmagomedov.shabimchat.domain.entity.ChatRoomEntity
 import com.example.abakarmagomedov.shabimchat.domain.entity.MessageEntity
 import com.example.abakarmagomedov.shabimchat.domain.gateway.ChatRoomGateway
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.realm.Realm
 import io.realm.kotlin.where
 import java.util.*
@@ -16,7 +19,7 @@ import javax.inject.Inject
 /**
  * Created by abakarmagomedov on 07/03/2018 at project ShabimChat.
  */
-class ChatRoomRepository @Inject constructor(private val messageMapper: MessageMapper) : ChatRoomGateway {
+class ChatRoomRepository @Inject constructor(private val messageMapper: MessageMapper, private val chatRoomMapper: ChatRoomMapper) : ChatRoomGateway {
 
     override fun addMessage(messageModel: MessageModel, chatId: Int): Completable {
         return Completable.fromAction {
@@ -42,5 +45,15 @@ class ChatRoomRepository @Inject constructor(private val messageMapper: MessageM
         }
         val messagesList = chatRoomModel?.messages
         return Observable.just(messagesList?.toList()?.let { messageMapper.mapModel(it) })
+    }
+
+    override fun getAllChats(): Single<List<ChatRoomEntity>> {
+        var chatRoomModel: List<ChatRoomModel>? = null
+        Realm.getDefaultInstance().use {
+            val result = it.where(ChatRoomModel::class.java)
+                    .findAll()
+            chatRoomModel = it.copyFromRealm(result)
+        }
+        return Single.just(chatRoomModel?.toList()?.let { chatRoomMapper.map(it) })
     }
 }

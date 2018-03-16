@@ -1,4 +1,4 @@
-package com.example.abakarmagomedov.shabimchat;
+package com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.adapter;
 
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.abakarmagomedov.shabimchat.R;
 import com.example.abakarmagomedov.shabimchat.domain.entity.ChatRoomEntity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
