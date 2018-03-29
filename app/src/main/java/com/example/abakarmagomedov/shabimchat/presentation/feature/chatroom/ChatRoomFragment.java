@@ -43,6 +43,10 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
     @BindView(R.id.button_chatbox_send) Button sendMessageButton;
     @BindView(R.id.record) ImageView record;
     @BindView(R.id.edittext_chatbox) EditText messageEditText;
+    private List<ChatEntityMarker> messages;
+    private MessageAdapter messageAdapter;
+    private MediaRecorder mRecorder = null;
+    private boolean isRecording;
 
     @OnClick(R.id.button_chatbox_send)
     void onSendButtonClicked() {
@@ -54,11 +58,6 @@ public class ChatRoomFragment extends BaseMvpFragment<ChatRoomView, ChatRoomPres
         presenter.sendMessage(message, getArguments().getInt(CHAT_ROOM_ID, -5));
         messageEditText.setText("");
     }
-
-    private List<ChatEntityMarker> messages;
-    private MessageAdapter messageAdapter;
-    private MediaRecorder mRecorder = null;
-    private boolean isRecording;
 
     public ChatRoomFragment() {
 
