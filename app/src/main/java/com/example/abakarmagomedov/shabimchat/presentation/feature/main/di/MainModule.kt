@@ -36,5 +36,4 @@ class MainModule {
     internal fun toolbarTitleDelegate(activity: MainActivity): ToolbarTitleDelegate {
         return ToolbarTitleDelegate(activity)
     }
-
 }
