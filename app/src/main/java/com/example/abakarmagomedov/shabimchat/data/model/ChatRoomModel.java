@@ -19,6 +19,7 @@ public class ChatRoomModel extends RealmObject {
     private String senderAvatar;
     private String recepientAvatar;
     private RealmList<MessageModel> messages;
+    private RealmList<AudioMessageModel> audioMessageModels;
 
     public ChatRoomModel() {
     }

@@ -1,10 +1,12 @@
 package com.example.abakarmagomedov.shabimchat.domain.entity;
 
+import com.example.abakarmagomedov.shabimchat.presentation.base.Message;
+
 /**
  * Created by abakarmagomedov on 05/03/2018 at project ShabimChat.
  */
 
-public class AudioMessageEntity implements ChatEntityMarker {
+public class AudioMessageEntity implements ChatEntityMarker, Message {
     private String pathToFile;
     private UserEntity sender;
     private long createdAt;

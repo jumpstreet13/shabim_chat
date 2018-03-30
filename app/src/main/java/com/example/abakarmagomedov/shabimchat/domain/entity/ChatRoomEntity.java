@@ -8,7 +8,7 @@ public class ChatRoomEntity {
 
     private long id;
     private String recepientName;
-    private String messageText;
+    private MessageEntity messages;
     private Long messageTime;
     private String senderAvatar;
     private String recepientAvatar;
@@ -16,10 +16,9 @@ public class ChatRoomEntity {
     public ChatRoomEntity() {
     }
 
-    public ChatRoomEntity(long id, String recepientName, String messageText, Long messageTime) {
+    public ChatRoomEntity(long id, String recepientName, Long messageTime) {
         this.id = id;
         this.recepientName = recepientName;
-        this.messageText = messageText;
         this.messageTime = messageTime;
     }
 
@@ -39,12 +38,12 @@ public class ChatRoomEntity {
         this.recepientName = recepientName;
     }
 
-    public String getMessageText() {
-        return messageText;
+    public MessageEntity getMessages() {
+        return messages;
     }
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public void setMessages(MessageEntity messages) {
+        this.messages = messages;
     }
 
     public Long getMessageTime() {

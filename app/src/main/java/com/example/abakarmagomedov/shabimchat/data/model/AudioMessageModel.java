@@ -1,6 +1,7 @@
 package com.example.abakarmagomedov.shabimchat.data.model;
 
 import com.example.abakarmagomedov.shabimchat.domain.entity.UserEntity;
+import com.example.abakarmagomedov.shabimchat.presentation.base.Message;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -9,12 +10,11 @@ import io.realm.annotations.PrimaryKey;
  * Created by abakarmagomedov on 13/03/2018 at project ShabimChat.
  */
 
-public class AudioMessageModel extends RealmObject {
+public class AudioMessageModel extends RealmObject implements Message {
 
     @PrimaryKey
     private long id;
     private String pathToFile;
-    private UserEntity sender;
     private long createdAt;
     private boolean isSender;
     private String duration;
@@ -25,14 +25,6 @@ public class AudioMessageModel extends RealmObject {
 
     public void setPathToFile(String pathToFile) {
         this.pathToFile = pathToFile;
-    }
-
-    public UserEntity getSender() {
-        return sender;
-    }
-
-    public void setSender(UserEntity sender) {
-        this.sender = sender;
     }
 
     public long getCreatedAt() {

@@ -1,10 +1,12 @@
 package com.example.abakarmagomedov.shabimchat.domain.entity;
 
+import com.example.abakarmagomedov.shabimchat.presentation.base.Message;
+
 /**
  * Created by abakarmagomedov on 21/02/2018 at project ShabimChat.
  */
 
-public class MessageEntity implements ChatEntityMarker {
+public class MessageEntity implements ChatEntityMarker, Message {
 
     private long id;
     private String message;
