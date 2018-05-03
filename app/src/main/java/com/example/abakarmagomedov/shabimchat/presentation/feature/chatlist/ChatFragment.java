@@ -56,7 +56,6 @@ public class ChatFragment extends BaseMvpFragment<ChatListView, ChatListPresente
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof MainActivity) {
             listener = (ChatClickedListener) context;
         }

@@ -1,5 +1,7 @@
 package com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist;
 
+import android.util.Log;
+
 import com.example.abakarmagomedov.shabimchat.domain.interactor.ChatListInteractor;
 import com.example.abakarmagomedov.shabimchat.presentation.base.BaseMvpPresenter;
 
@@ -19,17 +21,16 @@ public class ChatListPresenter extends BaseMvpPresenter<ChatListView> {
     }
 
     public void getAllChats() {
-        chatListInteractor.getAllChats()
+        compositeDisposable.add(chatListInteractor.getAllChats()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(chatRoomEntities -> {
-                    if (getView() != null) {
-                        getView().allChatsLoaded(chatRoomEntities);
-                    }
+                    Log.d("Entities", chatRoomEntities.toString());
+                    getView().allChatsLoaded(chatRoomEntities);
                 }, throwable -> {
                     if (getView() != null) {
                         getView().showError(throwable.getMessage());
                     }
-                });
+                }));
     }
 }

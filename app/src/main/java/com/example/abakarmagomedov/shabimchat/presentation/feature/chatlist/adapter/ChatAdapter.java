@@ -71,7 +71,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
         void bindView(ChatRoomEntity chatEntity, final ChatClickListener listener) {
             recipientName.setText(chatEntity.getRecepientName());
-            messageText.setText(chatEntity.getMessageText());
+            messageText.setText(chatEntity.getMessages().getMessage());
             messageTime.setText("21.16");
 
             ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse("https://blog.caranddriver.com/wp-content/uploads/2017/04/cars_3_characters-1-876x535.jpg")).build();
