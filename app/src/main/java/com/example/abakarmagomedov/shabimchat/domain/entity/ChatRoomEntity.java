@@ -1,5 +1,8 @@
 package com.example.abakarmagomedov.shabimchat.domain.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by abakarmagomedov on 18/02/2018 at project ShabimChat.
  */
@@ -8,18 +11,20 @@ public class ChatRoomEntity {
 
     private long id;
     private String recepientName;
-    private MessageEntity messages;
+    private List<MessageEntity> messages;
     private Long messageTime;
     private String senderAvatar;
     private String recepientAvatar;
 
     public ChatRoomEntity() {
+        messages = new ArrayList<>();
     }
 
     public ChatRoomEntity(long id, String recepientName, Long messageTime) {
         this.id = id;
         this.recepientName = recepientName;
         this.messageTime = messageTime;
+        messages = new ArrayList<>();
     }
 
     public long getId() {
@@ -38,11 +43,11 @@ public class ChatRoomEntity {
         this.recepientName = recepientName;
     }
 
-    public MessageEntity getMessages() {
+    public List<MessageEntity> getMessages() {
         return messages;
     }
 
-    public void setMessages(MessageEntity messages) {
+    public void setMessages(List<MessageEntity> messages) {
         this.messages = messages;
     }
 

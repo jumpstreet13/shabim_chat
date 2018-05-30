@@ -1,6 +1,7 @@
 package com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.adapter;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,15 +36,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         this.chatClickListener = chatClickListener;
     }
 
+    @NonNull
     @Override
-    public ChatHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChatHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.chat_item, parent, false);
         return new ChatHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ChatHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChatHolder holder, int position) {
         ChatRoomEntity chatEntity = chats.get(position);
         holder.bindView(chatEntity, chatClickListener);
     }
@@ -59,7 +61,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         private SimpleDraweeView recipientAvatar, senderAvatar;
         private ConstraintLayout chatBox;
 
-        public ChatHolder(View itemView) {
+        ChatHolder(View itemView) {
             super(itemView);
             recipientName = itemView.findViewById(R.id.recipient_name);
             recipientAvatar = itemView.findViewById(R.id.recipient_avatar);
@@ -71,7 +73,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
         void bindView(ChatRoomEntity chatEntity, final ChatClickListener listener) {
             recipientName.setText(chatEntity.getRecepientName());
-            messageText.setText(chatEntity.getMessages().getMessage());
+            messageText.setText(chatEntity.getMessages().get(chatEntity.getMessages().size() - 1).getMessage());
             messageTime.setText("21.16");
 
             ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse("https://blog.caranddriver.com/wp-content/uploads/2017/04/cars_3_characters-1-876x535.jpg")).build();

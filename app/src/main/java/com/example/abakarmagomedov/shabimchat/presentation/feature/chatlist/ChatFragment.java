@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.abakarmagomedov.shabimchat.data.model.MessageModel;
 import com.example.abakarmagomedov.shabimchat.presentation.base.BaseMvpFragment;
 import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.adapter.ChatAdapter;
 import com.example.abakarmagomedov.shabimchat.R;
@@ -72,10 +73,10 @@ public class ChatFragment extends BaseMvpFragment<ChatListView, ChatListPresente
         SharedPrefManager prefManager = new SharedPrefManager(getActivity());
         if (prefManager.isFirstRun()) {
             prefManager.writeFirstRun();
-            ChatRoomModel chatmodel = new ChatRoomModel(0, "Abakar Magomedov", "Hi Abakar", 24325435L);
-            ChatRoomModel chatmodel2 = new ChatRoomModel(1, "Abakar Magomedov", "Hi Abakar", 24325435L);
-            ChatRoomModel chatmodel3 = new ChatRoomModel(2, "Abakar Magomedov", "Hi Abakar", 24325435L);
-            ChatRoomModel chatmodel4 = new ChatRoomModel(3, "Abakar Magomedov", "Hi Abakar", 24325435L);
+            ChatRoomModel chatmodel = new ChatRoomModel(0, "Abakar Magomedov", new MessageModel(0, 0, "Hi Abakar", 0, true), 24325435L);
+            ChatRoomModel chatmodel2 = new ChatRoomModel(1, "Abakar Magomedov", new MessageModel(0, 0, "Hi Abakar", 0, true), 24325435L);
+            ChatRoomModel chatmodel3 = new ChatRoomModel(2, "Abakar Magomedov", new MessageModel(0, 0, "Hi Abakar", 0, true), 24325435L);
+            ChatRoomModel chatmodel4 = new ChatRoomModel(3, "Abakar Magomedov", new MessageModel(0, 0, "Hi Abakar", 0, true), 24325435L);
             Realm realm = Realm.getDefaultInstance();
             realm.executeTransaction(realm1 -> {
                 realm1.insertOrUpdate(chatmodel);

@@ -5,6 +5,8 @@ import android.util.Log;
 import com.example.abakarmagomedov.shabimchat.domain.interactor.ChatListInteractor;
 import com.example.abakarmagomedov.shabimchat.presentation.base.BaseMvpPresenter;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -16,6 +18,7 @@ public class ChatListPresenter extends BaseMvpPresenter<ChatListView> {
 
     private final ChatListInteractor chatListInteractor;
 
+    @Inject
     public ChatListPresenter(ChatListInteractor chatListInteractor) {
         this.chatListInteractor = chatListInteractor;
     }

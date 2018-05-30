@@ -14,7 +14,6 @@ public class ChatRoomModel extends RealmObject {
     private long id;
 
     private String recepientName;
-    private String messageText;
     private Long messageTime;
     private String senderAvatar;
     private String recepientAvatar;
@@ -24,11 +23,12 @@ public class ChatRoomModel extends RealmObject {
     public ChatRoomModel() {
     }
 
-    public ChatRoomModel(long id, String recepientName, String messageText, Long messageTime) {
+    public ChatRoomModel(long id, String recepientName, MessageModel messageModel, Long messageTime) {
         this.id = id;
         this.recepientName = recepientName;
-        this.messageText = messageText;
         this.messageTime = messageTime;
+        messages = new RealmList<>();
+        messages.add(messageModel);
     }
 
     public long getId() {
@@ -45,14 +45,6 @@ public class ChatRoomModel extends RealmObject {
 
     public void setRecepientName(String recepientName) {
         this.recepientName = recepientName;
-    }
-
-    public String getMessageText() {
-        return messageText;
-    }
-
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
     }
 
     public Long getMessageTime() {
