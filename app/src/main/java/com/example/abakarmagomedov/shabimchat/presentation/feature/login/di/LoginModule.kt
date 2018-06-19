@@ -4,6 +4,7 @@ import android.app.Activity
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import com.example.abakarmagomedov.shabimchat.delegates.ErrorDialogDelegate
+import com.example.abakarmagomedov.shabimchat.delegates.LoadingDialogDelegate
 import com.example.abakarmagomedov.shabimchat.di.scope.PerActivity
 import com.example.abakarmagomedov.shabimchat.presentation.feature.login.LoginActivity
 import dagger.Module
@@ -15,6 +16,12 @@ import dagger.Provides
 
 @Module
 class LoginModule {
+
+    @PerActivity
+    @Provides
+    fun loadingDialogDelegate(activity: LoginActivity): LoadingDialogDelegate {
+        return LoadingDialogDelegate(activity.supportFragmentManager)
+    }
 
     @Provides
     @PerActivity

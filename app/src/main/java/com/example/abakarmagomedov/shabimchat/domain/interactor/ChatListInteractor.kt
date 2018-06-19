@@ -10,7 +10,7 @@ import javax.inject.Inject
  */
 class ChatListInteractor @Inject constructor(private val getChatsUseCase: GetChatsUseCase) {
 
-    public fun getAllChats(): Single<List<ChatRoomEntity>> {
+    fun getAllChats(): Single<List<ChatRoomEntity>> {
         return getChatsUseCase.getAllChats()
     }
 }

@@ -30,7 +30,6 @@ import jp.wasabeef.fresco.processors.GrayscalePostprocessor;
 
 public class LoginActivity extends BaseMvpActivity<LoginView, LoginPresenter> implements LoginView {
 
-    @Inject ErrorDialogDelegate errorDialogDelegate;
     @BindView(R.id.login_button) Button loginButton;
     @BindView(R.id.logo_view) SimpleDraweeView logoView;
     @BindView(R.id.registration_textview) TextView registrationTextView;

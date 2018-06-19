@@ -18,10 +18,7 @@ import javax.inject.Inject
 /**
  * Created by abakarmagomedov on 06/03/2018 at project ShabimChat.
  */
-class App : DaggerApplication(), HasSupportFragmentInjector {
-
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
+class App : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -34,6 +31,5 @@ class App : DaggerApplication(), HasSupportFragmentInjector {
         Realm.setDefaultConfiguration(config)
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.builder().create(this)
 }
