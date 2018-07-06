@@ -2,6 +2,9 @@ package com.example.abakarmagomedov.shabimchat.di.module
 
 import com.example.abakarmagomedov.shabimchat.presentation.feature.login.LoginActivity
 import com.example.abakarmagomedov.shabimchat.di.scope.PerActivity
+import com.example.abakarmagomedov.shabimchat.di.scope.PerFragment
+import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.ChatListFragment
+import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.di.ChatListModule
 import com.example.abakarmagomedov.shabimchat.presentation.feature.login.di.LoginModule
 import com.example.abakarmagomedov.shabimchat.presentation.feature.main.MainActivity
 import com.example.abakarmagomedov.shabimchat.presentation.feature.main.di.MainBuilderModule

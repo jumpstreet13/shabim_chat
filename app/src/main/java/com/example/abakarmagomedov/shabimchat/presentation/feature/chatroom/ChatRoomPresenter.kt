@@ -15,7 +15,7 @@ import javax.inject.Inject
 class ChatRoomPresenter @Inject constructor(private val chatRoomInteractor: ChatRoomInteractor,
                                             private val mapper: MessageMapper) : BaseMvpPresenter<ChatRoomView>() {
 
-    public fun getAllMessages(id: Int) {
+    fun getAllMessages(id: Int) {
         compositeDisposable.add(chatRoomInteractor.getAllMessagesForRoom(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -24,7 +24,7 @@ class ChatRoomPresenter @Inject constructor(private val chatRoomInteractor: Chat
                 }, { t: Throwable? -> t?.message?.let { view?.showError(it) } }))
     }
 
-    public fun sendMessage(messageEntity: MessageEntity, chatId: Int) {
+    fun sendMessage(messageEntity: MessageEntity, chatId: Int) {
         chatRoomInteractor.addNewMessage(mapper.map(messageEntity), chatId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

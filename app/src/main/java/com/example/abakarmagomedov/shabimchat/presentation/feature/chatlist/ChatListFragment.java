@@ -2,19 +2,15 @@ package com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.abakarmagomedov.shabimchat.data.model.MessageModel;
 import com.example.abakarmagomedov.shabimchat.presentation.base.BaseMvpFragment;
 import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.adapter.ChatAdapter;
 import com.example.abakarmagomedov.shabimchat.R;
-import com.example.abakarmagomedov.shabimchat.data.mapper.ChatRoomMapper;
 import com.example.abakarmagomedov.shabimchat.data.model.ChatRoomModel;
 import com.example.abakarmagomedov.shabimchat.domain.entity.ChatRoomEntity;
 import com.example.abakarmagomedov.shabimchat.managers.SharedPrefManager;
@@ -22,13 +18,12 @@ import com.example.abakarmagomedov.shabimchat.presentation.feature.main.MainActi
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import io.realm.Realm;
 
-public class ChatFragment extends BaseMvpFragment<ChatListView, ChatListPresenter> implements ChatListView, ChatAdapter.ChatClickListener {
+public class ChatListFragment extends BaseMvpFragment<ChatListView, ChatListPresenter> implements ChatListView, ChatAdapter.ChatClickListener {
 
     @BindView(R.id.chats_recycler_view)
     RecyclerView recyclerView;
@@ -38,14 +33,13 @@ public class ChatFragment extends BaseMvpFragment<ChatListView, ChatListPresente
         void chatRoomClicked(int chatId);
     }
 
-    public ChatFragment() {
+    public ChatListFragment() {
         // Required empty public constructor
     }
 
-
     // TODO: Rename and change types and number of parameters
-    public static ChatFragment newInstance() {
-        ChatFragment fragment = new ChatFragment();
+    public static ChatListFragment newInstance() {
+        ChatListFragment fragment = new ChatListFragment();
         return fragment;
     }
 
@@ -55,7 +49,7 @@ public class ChatFragment extends BaseMvpFragment<ChatListView, ChatListPresente
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof MainActivity) {
             listener = (ChatClickedListener) context;
@@ -91,7 +85,7 @@ public class ChatFragment extends BaseMvpFragment<ChatListView, ChatListPresente
     @Override
     public void allChatsLoaded(List<ChatRoomEntity> chats) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        ChatAdapter chatAdapter = new ChatAdapter(chats, ChatFragment.this);
+        ChatAdapter chatAdapter = new ChatAdapter(chats, ChatListFragment.this);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);

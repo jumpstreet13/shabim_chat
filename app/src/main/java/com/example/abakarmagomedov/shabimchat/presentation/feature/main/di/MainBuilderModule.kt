@@ -1,8 +1,10 @@
 package com.example.abakarmagomedov.shabimchat.presentation.feature.main.di
 
 import com.example.abakarmagomedov.shabimchat.di.scope.PerFragment
-import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.ChatFragment
+import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.ChatListFragment
+import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.di.ChatListModule
 import com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom.ChatRoomFragment
+import com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom.di.ChatRoomModule
 import dagger.Module
 import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
@@ -13,11 +15,10 @@ import dagger.android.ContributesAndroidInjector
 
 @Module(includes = [AndroidInjectionModule::class])
 interface MainBuilderModule {
-    @PerFragment
-    @ContributesAndroidInjector()
+
+    @ContributesAndroidInjector(modules = [ChatRoomModule::class])
     fun provideChatRoomFragment(): ChatRoomFragment
 
-    @PerFragment
-    @ContributesAndroidInjector()
-    fun provideChatListFragment(): ChatFragment
+    @ContributesAndroidInjector(modules = [ChatListModule::class])
+    fun provideChatListFragment(): ChatListFragment
 }                             

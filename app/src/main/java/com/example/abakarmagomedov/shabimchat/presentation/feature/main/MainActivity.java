@@ -10,17 +10,25 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.ChatFragment;
+import com.example.abakarmagomedov.shabimchat.presentation.feature.chatlist.ChatListFragment;
 import com.example.abakarmagomedov.shabimchat.R;
 import com.example.abakarmagomedov.shabimchat.presentation.base.ToolbarActivity;
 import com.example.abakarmagomedov.shabimchat.presentation.feature.chatroom.ChatRoomFragment;
 
-import butterknife.BindView;
+import javax.inject.Inject;
 
-public class MainActivity extends ToolbarActivity<MainView, MainPresenter> implements ChatFragment.ChatClickedListener {
+import butterknife.BindView;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class MainActivity extends ToolbarActivity<MainView, MainPresenter> implements ChatListFragment.ChatClickedListener, HasSupportFragmentInjector {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> injector;
 
     private DrawerLayout mDrawerLayout;
 
@@ -43,7 +51,7 @@ public class MainActivity extends ToolbarActivity<MainView, MainPresenter> imple
                     mDrawerLayout.closeDrawers();
                     switch (menuItem.getGroupId()) {
                         case 0:
-                            Fragment chatFragment = ChatFragment.newInstance();
+                            Fragment chatFragment = ChatListFragment.newInstance();
                             transaction.replace(R.id.content_frame, chatFragment);
                             transaction.addToBackStack(null);
                             transaction.commit();
@@ -79,5 +87,10 @@ public class MainActivity extends ToolbarActivity<MainView, MainPresenter> imple
         transaction.replace(R.id.content_frame, chatRoomFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return injector;
     }
 }

@@ -24,7 +24,7 @@ import javax.inject.Inject
 /**
  * Created by abakarmagomedov on 07/03/2018 at project ShabimChat.
  */
-abstract class BaseMvpFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V, P>(), HasSupportFragmentInjector {
+abstract class BaseMvpFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V, P>() {
 
     @Inject
     protected lateinit var shabimPresenter: P
@@ -35,17 +35,16 @@ abstract class BaseMvpFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V
     @Inject
     protected lateinit var errorDialogDelegate: ErrorDialogDelegate
 
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
-
     private lateinit var unbinder: Unbinder
+
+    override fun createPresenter(): P = shabimPresenter
 
     override fun onDestroyView() {
         super.onDestroyView()
         unbinder.unbind()
     }
 
-    override fun onAttach(context: Context) {
+    override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
@@ -69,7 +68,4 @@ abstract class BaseMvpFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V
     protected fun changeTitle(title: String) {
         toolbarTitleDelegate.changeTitle(title)
     }
-
-    override fun createPresenter(): P = shabimPresenter
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
 }
